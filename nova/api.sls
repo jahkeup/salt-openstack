@@ -1,7 +1,8 @@
 include:
   - openstack.repo
   - openstack.nova.conf
-
+  - openstack.nova.common
+  - openstack.nova.tools
 nova-api:
   pkg:
     - installed

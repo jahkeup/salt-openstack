@@ -1,0 +1,3 @@
+python-novaclient:
+  pkg:
+    - installed

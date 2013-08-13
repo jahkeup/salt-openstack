@@ -1,9 +1,9 @@
 include:
   - openstack.repo
+  - openstack.nova.conf
 
 nova-compute-kvm:
   pkg.installed:
-    - order: 3
 
 nova-compute:
   service.running:
