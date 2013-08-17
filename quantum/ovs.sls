@@ -1,10 +1,20 @@
+include:
+  - openstack.repo
+
 quantum-plugin-openvswitch:
-  pkg:
-    - installed
+  pkg.installed
 
 quantum-plugin-openvswitch-agent:
-  pkg:
-    - installed
+  pkg.installed
+
+  service.running:
+    - enable: True
+
+# openvswitch-switch:
+#   pkg.installed:
+#     - pkgs:
+#         - openvswitch-switch
+#         - openvswitch-datapath-source
 
 /etc/quantum/plugins/openvswitch:
   file.directory:
@@ -27,3 +37,9 @@ quantum-plugin-openvswitch-agent:
     - target: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
     - require:
       - file: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
+# /tmp/add_bridges.sh:
+#   cmd.script:
+#     - source: salt://openstack/quantum/scripts/add_bridges.sh
+#     - args: >
+#       -p {{ pillar['openstack']['quantum']['network']['bridge_name'] }}
+#       -pb {{ grains['openstack']['quantum']['network']['bridge_port'] }}/
