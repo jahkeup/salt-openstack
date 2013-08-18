@@ -1,6 +1,5 @@
 import salt.modules.ovs
 
-
 ovs = salt.modules.ovs
 
 def __virtual__():
@@ -31,7 +30,8 @@ def bridged(bridge_name,ports=None):
             error = {
                 bridge_name: "An error occurred while creating bridge"
             }
-            comment = "Failed to create bridge {bridge}".format(bridge=bridge_name)
+            comment = "Failed to create bridge {bridge}"
+            comment = comment.format(bridge=bridge_name)
             return _changeset(False,error,comment)
     if ports:
         for port in ports:
@@ -43,7 +43,8 @@ def bridged(bridge_name,ports=None):
                     error = {
                         port: "An error occurred while adding the port"
                     }
-                    comment = "Failed to add port {port} to bridge {bridge}".format(port=port,bridge=bridge_name)
+                    comment = "Failed to add port {port} to bridge {bridge}"
+                    comment = comment.format(port=port,bridge=bridge_name)
                     return _changeset(False,error,comment)
     if changes:
         comment = "Bridge updated."
@@ -51,4 +52,4 @@ def bridged(bridge_name,ports=None):
         comment = "Bridge in correct state"
     
     return _changeset(True,changes,comment)
-                
+

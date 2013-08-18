@@ -1,3 +1,35 @@
+"""
+Openvswitch Module
+
+This module allows the management of OVS on a given minion. 
+
+Functions available:
+
+br-int:
+  ovs.add_bridge
+
+br-int:
+  ovs.add_port:
+    - port: eth0
+br-int:
+  ovs.remove_bridge
+
+br-int:
+  ovs.remove_port:
+    - port: eth0
+
+The state file contains the bridged and absent functions:
+
+br-int:
+  ovs.bridged:
+    - ports:
+        - eth1
+        - eth2
+br-int:
+  ovs.absent
+
+"""
+
 def __virtual__():
     return "ovs"
 
@@ -18,18 +50,30 @@ def _bridge_exists(bridge_name):
                 return True
         return False
 
-def _port_exists(bridge_name,port):
+def _bridge_ports(bridge_name):
+    if not _bridge_exists(bridge_name):
+        return []
     cmd = "list-ports {bridge_name}".format(bridge_name=bridge_name)
     ret = _ovs(cmd)
-    if ret['retcode'] == 0:
-        for line in ret['stdout'].splitlines():
-            if line.rstrip() == port:
+    if ret:
+        lines = ret['stdout'].splitlines()
+        return [line.strip() for line in lines]
+    
+def _port_exists(bridge_name,port):
+    bridge_ports = _bridge_ports(bridge_name)
+    if bridge_ports:
+        try:
+            if bridge_ports.index(port):
                 return True
-        return False
+        except ValueError:
+            return False
+
     else:
         return False
 
 def bridges():
+    """List all bridges managed by ovs
+    """
     ret = _ovs('list-br')
     if ret:
         return ret['stdout']
@@ -37,79 +81,75 @@ def bridges():
         return False
 
 def add_bridge(bridge_name):
+    """Create bridge to be managed with ovs
+    """
     if not _bridge_exists(bridge_name):
         cmd = "add-br {bridge_name}".format(bridge_name=bridge_name)
         ret = _ovs(cmd)
-        if ret['retcode'] == 0:
-            return True
-        else:
-            return ret['stderr']
-    else:
-        return True
-
-def add_port(bridge_name,port):
-    if not _bridge_exists(bridge_name):
-        return False
-    elif not _port_exists(bridge_name,port):
-        cmd = "add-port {bridge_name} {port}".format(bridge_name=bridge_name,
-                                                     port=port)
-        ret = _ovs(cmd)
-        if ret['retcode'] == 0:
-            return True
+        if ret:
+            return {
+                'bridge': "Added {bridge_name}".format(bridge_name=bridge_name)
+            }
         else:
             return False
     else:
-        return True
+        return "Bridge exists already"
 
-
-# Temporary until I can the states straightened out, the following belongs
-# in a _state
-
-ovs = salt.modules.ovs
-
-def _changeset(status,changes,comment):
-     return {
-        'status': status,
-        'changes': changes,
-        'comment': comment
-    }
-
-def bridged(bridge_name,ports=None):
-    if not ports:
-        ports = []
+def remove_bridge(bridge_name):
+    """Remove managed ovs bridge and ports if they exist
+    """
     changes = {}
-    status = True
-    comment = ""
-    
-    if not ovs._bridge_exists(bridge_name):
-        ret = ovs.add_bridge(bridge_name)
-        if isinstance(ret,dict):
-            # The bridge was created, log it and move on.
-            changes[bridge_name] = ret
-        elif isinstance(ret,bool) and ret == False:
-            # This would mean that the bridge was not successfully created
-            # so we have to stop here.
-            error = {
-                bridge_name: "An error occurred while creating bridge"
-            }
-            comment = "Failed to create bridge {bridge}".format(bridge=bridge_name)
-            return _changeset(False,error,comment)
-    if ports:
-        for port in ports:
-            if not ovs._port_exists(bridge_name,port):
-                ret = ovs.port_add(bridge_name,port)
-                if isinstance(ret,dict):
-                    changes[bridge_name]['ports'][port] = ret
-                elif isinstance(ret,bool) and ret == False:
-                    error = {
-                        port: "An error occurred while adding the port"
-                    }
-                    comment = "Failed to add port {port} to bridge {bridge}".format(port=port,bridge=bridge_name)
-                    return _changeset(False,error,comment)
-    if changes:
-        comment = "Bridge updated."
+    if not _bridge_exists(bridge_name):
+        return "Bridge does not exists."
+    bridge_ports = _bridge_ports(bridge_name)
+    for port in bridge_ports:
+        changes[port] = remove_port(bridge_name,port)
+    cmd = "del-br {bridge_name}".format(bridge_name=bridge_name)
+    ret = _ovs(cmd)
+    if ret:
+        return {
+            'bridge': 'Deleted {bridge_name}'.format(bridge_name=bridge_name),
+            'affected': changes
+        }
     else:
-        comment = "Bridge in correct state"
+        return False
+
+def add_port(bridge_name,port):
+    """Add port (network interface) to an ovs bridge.
+   
+    Bridge *must* exist.
+    """
+    if not _bridge_exists(bridge_name):
+        return False
+
+    if _port_exists(bridge_name,port):
+        msg = "Port {port} is already attached to {bridge}"
+        return msg.format(port=port,bridge=bridge_name)
+        
+    cmd = "add-port {bridge_name} {port}".format(bridge_name=bridge_name,
+                                                     port=port)
+    ret = _ovs(cmd)
+    if ret:
+        return True
+    else:
+        return False
+
+def remove_port(bridge_name,port):
+    if not _bridge_exists(bridge_name):
+        return False
+
+    if _port_exists(bridge_name,port):
+        msg = "Port {port} is already attached to {bridge}"
+        return msg.format(bridge=bridge_name,port=port)
     
-    return _changeset(True,changes,comment)
-                
+    cmd = "del-port {bridge} {port}".format(bridge_name=bridge_name,
+                                            port=port)
+    ret = _ovs(cmd)
+    if ret:
+        return {
+            'port': 'Port {port} deleted from {bridge}'.format(bridge=bridge_name,
+                                                               port=port)
+        }
+    else:
+        return "False"
+
