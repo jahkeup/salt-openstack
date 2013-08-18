@@ -34,6 +34,11 @@ def __virtual__():
     return "ovs"
 
 def _ovs(cmd):
+    """
+    OVS Command runner,
+    
+    Returns either the dict or False if it fails to run
+    """
     command= 'ovs-vsctl {cmd}'.format(cmd=cmd)
     ret = __salt__['cmd.run_all'](command)
     if ret['retcode'] == 0:
@@ -42,6 +47,9 @@ def _ovs(cmd):
         return False
 
 def _bridge_exists(bridge_name):
+    """
+    True or False, does the bridge exist?
+    """
     ret = _ovs('list-br')
     if ret:
         lines = ret['stdout'].splitlines()
@@ -51,6 +59,9 @@ def _bridge_exists(bridge_name):
         return False
 
 def _bridge_ports(bridge_name):
+    """
+    Returns a list of ports connected to the specified bridge
+    """
     if not _bridge_exists(bridge_name):
         return []
     cmd = "list-ports {bridge_name}".format(bridge_name=bridge_name)
@@ -60,6 +71,9 @@ def _bridge_ports(bridge_name):
         return [line.strip() for line in lines]
     
 def _port_exists(bridge_name,port):
+    """
+    True or False, does the specified port exist on the bridge?
+    """
     bridge_ports = _bridge_ports(bridge_name)
     if bridge_ports:
         try:
@@ -135,6 +149,9 @@ def add_port(bridge_name,port):
         return False
 
 def remove_port(bridge_name,port):
+    """
+    Remove Port from Bridge_name
+    """
     if not _bridge_exists(bridge_name):
         return False
 

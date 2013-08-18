@@ -13,6 +13,15 @@ def _changeset(status,changes,comment):
     }
 
 def bridged(bridge_name,ports=None):
+    """
+    Ensure that bridge `bridge_name` exists and attach ports `ports` to it.
+
+    br-int:
+      ovs.bridged:
+        - ports:
+          - eth1
+          - eth2
+    """
     if not ports:
         ports = []
     changes = {}
