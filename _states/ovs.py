@@ -51,8 +51,8 @@ def bridged(bridge_name,ports=None):
             return _changeset(False,error,comment)
     if ports:
         for port in ports:
-            if not ovs._port_exists(name,port):
-                ret = ovs.port_add(name,port)
+            if not ovs._port_exists(port,name):
+                ret = ovs.port_add(port,name)
                 if isinstance(ret,dict):
                     changes[name]['ports'][port] = ret
                 elif isinstance(ret,bool) and ret == False:
