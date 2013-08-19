@@ -1,3 +1,10 @@
+"""
+State module for OVS
+
+*Requires openvswitch-switch to be installed and service running.*
+"""
+
+
 import salt.modules.ovs
 
 ovs = salt.modules.ovs
@@ -28,32 +35,32 @@ def bridged(bridge_name,ports=None):
     status = True
     comment = ""
     
-    if not ovs._bridge_exists(bridge_name):
-        ret = ovs.add_bridge(bridge_name)
+    if not ovs._bridge_exists(name):
+        ret = ovs.add_bridge(name)
         if isinstance(ret,dict):
             # The bridge was created, log it and move on.
-            changes[bridge_name] = ret
+            changes[name] = ret
         elif isinstance(ret,bool) and ret == False:
             # This would mean that the bridge was not successfully created
             # so we have to stop here.
             error = {
-                bridge_name: "An error occurred while creating bridge"
+                name: "An error occurred while creating bridge"
             }
             comment = "Failed to create bridge {bridge}"
-            comment = comment.format(bridge=bridge_name)
+            comment = comment.format(bridge=name)
             return _changeset(False,error,comment)
     if ports:
         for port in ports:
-            if not ovs._port_exists(bridge_name,port):
-                ret = ovs.port_add(bridge_name,port)
+            if not ovs._port_exists(name,port):
+                ret = ovs.port_add(name,port)
                 if isinstance(ret,dict):
-                    changes[bridge_name]['ports'][port] = ret
+                    changes[name]['ports'][port] = ret
                 elif isinstance(ret,bool) and ret == False:
                     error = {
                         port: "An error occurred while adding the port"
                     }
                     comment = "Failed to add port {port} to bridge {bridge}"
-                    comment = comment.format(port=port,bridge=bridge_name)
+                    comment = comment.format(port=port,bridge=name)
                     return _changeset(False,error,comment)
     if changes:
         comment = "Bridge updated."

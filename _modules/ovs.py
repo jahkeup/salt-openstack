@@ -3,6 +3,8 @@ Openvswitch Module
 
 This module allows the management of OVS on a given minion. 
 
+*Requires openvswitch-switch to be installed and service running.*
+
 Functions available:
 
 br-int:
