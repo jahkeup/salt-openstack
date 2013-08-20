@@ -31,10 +31,6 @@ br-int:
   ovs.absent
 
 """
-
-def __virtual__():
-    return "ovs"
-
 def _ovs(cmd):
     """
     OVS Command runner,
@@ -138,12 +134,12 @@ def add_port(name,bridge):
     if not _bridge_exists(bridge):
         return False
 
-    if _port_exists(port,bridge):
+    if _port_exists(name,bridge):
         msg = "Port {port} is already attached to {bridge}"
-        return msg.format(port=port,bridge=bridge)
+        return msg.format(port=name,bridge=bridge)
         
     cmd = "add-port {bridge} {port}".format(bridge=bridge,
-                                            port=port)
+                                            port=name)
     ret = _ovs(cmd)
     if ret:
         return True
@@ -157,18 +153,20 @@ def remove_port(name,bridge):
     if not _bridge_exists(bridge):
         return False
 
-    if _port_exists(port,bridge):
+    if _port_exists(name,bridge):
         msg = "Port {port} is already attached to {bridge}"
-        return msg.format(bridge=bridge,port=port)
+        return msg.format(bridge=bridge,port=name)
     
     cmd = "del-port {bridge} {port}".format(bridge=bridge,
-                                            port=port)
+                                            port=name)
     ret = _ovs(cmd)
     if ret:
         return {
             'port': 'Port {port} deleted from {bridge}'.format(bridge=bridge,
-                                                               port=port)
+                                                               port=name)
         }
     else:
         return "False"
 
+def ports(name):
+    return _bridge_ports(name)

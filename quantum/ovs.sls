@@ -13,16 +13,34 @@ quantum-plugin-openvswitch-agent:
 
   service.running:
     - enable: True
+include:
+  - kernel.headers
 
 openvswitch-switch:
   pkg.installed:
     - pkgs:
         - openvswitch-switch
         - openvswitch-datapath-source
-manual-compile-ovs:
+
+openvswitch-datapath-module:
+  pkg.installed:
+    - name: openvswitch-datapath-module-{{ grains['kernelrelease'] }}
+    - require:
+        - pkg: openvswitch-switch
+
+openvswitch-service:
+  service.running:
+    - name: openvswitch-switch
+    - enable: True
+    - require:
+        - pkg: openvswitch-datapath-module
+
+manual-compiled-ovs:
   cmd.wait:
     - name: |
         module-assistant auto-install openvswitch-datapath
+    - require:
+        - pkg: kernel.headers
     - watch:
         - pkg: openvswitch-switch
 
@@ -55,6 +73,7 @@ manual-compile-ovs:
     - require:
       - pkg: quantum-plugin-openvswitch
       - file.directory: /etc/quantum/plugins/openvswitch
+
 '/etc/quantum/plugin.ini':
   file.symlink:
     - target: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
