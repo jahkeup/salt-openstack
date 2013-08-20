@@ -1,18 +1,23 @@
 include:
   - openstack.repo
-  - openstack.nova.conf
+  - openstack.nova.user
+  - openstack.nova
 
 nova-compute-kvm:
   pkg.installed:
+    - require: 
+        - user: nova
 
 nova-compute:
   service.running:
     - enable: True
     - require:
       - pkg: nova-compute-kvm
+
 /etc/nova:
   file.directory:
     - user: nova
     - group: nova
     - require:
+      - user: nova
       - pkg: nova-compute-kvm

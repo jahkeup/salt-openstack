@@ -3,13 +3,17 @@
 
 include:
   - openstack.repo
+  - openstack.quantum.user
 
 quantum-plugin-openvswitch:
-  pkg.installed
+  pkg.installed:
+    - require: 
+        - user: quantum
 
 quantum-plugin-openvswitch-agent:
-  pkg:
-    - installed
+  pkg.installed:
+    - require: 
+        - user: quantum
 
   service.running:
     - enable: True
@@ -62,6 +66,7 @@ manual-compiled-ovs:
     - user: quantum
     - group: quantum
     - require:
+      - user: quantum
       - pkg: quantum-plugin-openvswitch
 
 '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini':
@@ -72,6 +77,7 @@ manual-compiled-ovs:
     - template: jinja
     - require:
       - pkg: quantum-plugin-openvswitch
+      - user: quantum
       - file.directory: /etc/quantum/plugins/openvswitch
 
 '/etc/quantum/plugin.ini':

@@ -5,5 +5,6 @@
     - source: salt://openstack/nova/conf/{{conf}}
     - template: jinja
     - require:
+      - user: nova
       - file.directory: '/etc/nova'
 {% endfor %}
