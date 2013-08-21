@@ -29,7 +29,6 @@ openstack:
       username: nova
       password: novapassword
   keystone:
-
     endpoints:
       - 69.43.73.66
     db:
@@ -74,4 +73,24 @@ openstack:
     service:
       username: glance
       password: glancepass
-  
+  ceph:
+    conf: /etc/ceph/ceph.conf
+    mon: 69.43.73.131
+    glance:
+      pool: images
+      user: images
+      uuid: 1000-0023-2323-2323
+      key: >-
+        RSA-KEY asdflkjsaflkasdflasdlfkasjdkdksdfd
+        aksdlfjasldkfjasdflkjsljfksjdfjskdfsdfsdfd
+        asdfasdfasdfasdfasdfasdfsdfsddsdfsdfsdfsds
+      
+    nova:
+      path: /nova
+      pool: instances
+      user: instances
+      uuid: 1100-1000-1020-1201
+      key: >-
+        RSA-KEY asdfasdfhajksdhflkasdjkflahskjashdf
+        akjshdfkjahsdkflhljasdhfkhasjldkfhlasdjkfhd
+        kajshdfkjlhasldfhlkasdhfshdkfksdhfkhksdhfjk

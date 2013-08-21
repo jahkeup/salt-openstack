@@ -1,0 +1,13 @@
+# for file in $(find . -name user.sls); do echo $file cat $file | grep uid; done
+
+./cinder/user.sls
+    - uid: 223
+./glance/user.sls
+    - uid: 224
+./keystone/user.sls
+    - uid: 220
+./nova/user.sls
+    - uid: 221
+./quantum/user.sls
+    - uid: 222
+

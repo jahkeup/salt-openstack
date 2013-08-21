@@ -1,11 +1,11 @@
 include:
   - openstack.repo
   - openstack.nova.user
-  - openstack.nova
+  - openstack.nova.conf
 
 nova-compute-kvm:
   pkg.installed:
-    - require: 
+    - require:
         - user: nova
 
 nova-compute:
