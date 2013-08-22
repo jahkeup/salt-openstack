@@ -17,6 +17,8 @@ quantum-plugin-openvswitch-agent:
 
   service.running:
     - enable: True
+    - require:
+        - pkg: quantum-plugin-openvswitch-agent
 include:
   - kernel.headers
 
