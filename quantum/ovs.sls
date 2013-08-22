@@ -28,11 +28,11 @@ openvswitch-switch:
         - openvswitch-switch
         - openvswitch-datapath-source
 
-openvswitch-datapath-module:
-  pkg.installed:
-    - name: openvswitch-datapath-module-{{ grains['kernelrelease'] }}
-    - require:
-        - pkg: openvswitch-switch
+# openvswitch-datapath-module:
+#   pkg.installed:
+#     - name: openvswitch-datapath-module-{{ grains['kernelrelease'] }}
+#     - require:
+#         - pkg: openvswitch-switch
 
 openvswitch-service:
   service.running:
