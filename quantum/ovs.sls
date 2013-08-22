@@ -4,6 +4,7 @@
 include:
   - openstack.repo
   - openstack.quantum.user
+  - kernel.headers
 
 quantum-plugin-openvswitch:
   pkg.installed:
@@ -19,8 +20,6 @@ quantum-plugin-openvswitch-agent:
     - enable: True
     - require:
         - pkg: quantum-plugin-openvswitch-agent
-include:
-  - kernel.headers
 
 openvswitch-switch:
   pkg.installed:
