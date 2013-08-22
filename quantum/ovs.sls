@@ -38,7 +38,7 @@ openvswitch-service:
     - name: openvswitch-switch
     - enable: True
     - require:
-        - pkg: openvswitch-datapath-module
+        - pkg: openvswitch-switch
 
 manual-compiled-ovs:
   cmd.wait:
