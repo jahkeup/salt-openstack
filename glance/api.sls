@@ -1,5 +1,7 @@
 include:
   - openstack.glance.user
+  - openstack.keystone.python
+  - openstack.database.python
 
 /etc/glance:
   file.directory:
@@ -13,6 +15,8 @@ glance-api:
   pkg.installed:
     - require:
         - user: glance
+        - pkg: python-keystone
+        - pkg: openstack-database-python
   service.running:
     - enable: True
     - require:
@@ -24,6 +28,8 @@ glance-registry:
   pkg.installed:
     - require:
         - user: glance
+        - pkg: python-keystone
+        - pkg: openstack-database-python
   service.running:
     - enable: True
     - require:
@@ -34,13 +40,18 @@ glance-registry:
 glance-api-conf:
   file.managed:
     - name: /etc/glance/glance-api.conf
+    - user: glance
+    - group: glance
     - source: salt://openstack/glance/conf/glance-api.conf
+    - template: jinja
     - require: 
         - pkg: glance-api
 
 glance-registry-conf:
   file.managed:
     - name: /etc/glance/glance-registry.conf
+    - user: glance
+    - group: glance
     - source: salt://openstack/glance/conf/glance-registry.conf
     - template: jinja
     - require:

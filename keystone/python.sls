@@ -1,0 +1,2 @@
+python-keystone:
+  pkg.installed
