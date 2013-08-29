@@ -1,0 +1,44 @@
+ii  cinder-api                                   1:2013.1.2-0ubuntu1~cloud0                    Cinder storage service - API server
+ii  cinder-common                                1:2013.1.2-0ubuntu1~cloud0                    Cinder storage service - common files
+ii  cinder-scheduler                             1:2013.1.2-0ubuntu1~cloud0                    Cinder storage service - Scheduler server
+ii  cinder-volume                                1:2013.1.2-0ubuntu1~cloud0                    Cinder storage service - Volume server
+ii  glance                                       1:2013.1.2-0ubuntu1~cloud0                    OpenStack Image Registry and Delivery Service - Daemons
+ii  glance-api                                   1:2013.1.2-0ubuntu1~cloud0                    OpenStack Image Registry and Delivery Service - API
+ii  glance-common                                1:2013.1.2-0ubuntu1~cloud0                    OpenStack Image Registry and Delivery Service - Common
+ii  glance-registry                              1:2013.1.2-0ubuntu1~cloud0                    OpenStack Image Registry and Delivery Service - Registry
+ii  keystone                                     1:2013.1.2-0ubuntu2~cloud0                    OpenStack identity service - Daemons
+ii  nova-ajax-console-proxy                      1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - AJAX console proxy - transitional package
+ii  nova-api                                     1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - API frontend
+ii  nova-cert                                    1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - certificate management
+ii  nova-common                                  1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - common files
+rc  nova-compute                                 1:2013.1~rc1-0ubuntu1~cloud0                  OpenStack Compute - compute node
+rc  nova-compute-kvm                             1:2013.1~rc1-0ubuntu1~cloud0                  OpenStack Compute - compute node (KVM)
+ii  nova-conductor                               1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - conductor service
+rc  nova-console                                 1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - Console
+ii  nova-consoleauth                             1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - Console Authenticator
+ii  nova-doc                                     1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - documentation
+ii  nova-novncproxy                              1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - NoVNC proxy
+ii  nova-scheduler                               1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute - virtual machine scheduler
+ii  openstack-dashboard                          1:2013.1.2-0ubuntu1~cloud0                    django web interface to Openstack
+rc  openstack-dashboard-ubuntu-theme             1:2013.1.2-0ubuntu1~cloud0                    Ubuntu theme for the Openstack dashboard
+ii  python-cinder                                1:2013.1.2-0ubuntu1~cloud0                    Cinder Python libraries
+ii  python-cinderclient                          1:1.0.4-3~bpo70+1                             python bindings to the OpenStack Volume API
+ii  python-django-horizon                        1:2013.1.2-0ubuntu1~cloud0                    Django module providing web based interaction with OpenStack
+ii  python-glance                                1:2013.1.2-0ubuntu1~cloud0                    OpenStack Image Registry and Delivery Service - Python library
+ii  python-glanceclient                          1:0.9.0-2~bpo70+1                             Client library for Openstack glance server
+ii  python-keystone                              1:2013.1.2-0ubuntu2~cloud0                    OpenStack identity service - Python library
+ii  python-keystoneclient                        1:0.2.3-0ubuntu2.2~cloud0                     Client library for OpenStack Identity API
+ii  python-nova                                  1:2013.1.2-0ubuntu1~cloud0                    OpenStack Compute Python libraries
+ii  python-novaclient                            2:2.13.0-3~bpo70+1                            client library for OpenStack Compute API
+ii  python-openstack-auth                        1.0.11-1~bpo70+1                              Django authentication backend for Openstack
+ii  python-oslo.config                           1:1.1.0-3~bpo70+1                             Common code for Openstack Projects (configuration API)
+ii  python-quantum                               1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virutal network service for Openstack - Python library
+ii  python-quantumclient                         1:3.0.a1-1                                    client API library for Quantum
+ii  python-swiftclient                           1:1.4.0-2~bpo70+1                             Client library for Openstack Swift API
+ii  quantum-common                               1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - common
+ii  quantum-dhcp-agent                           1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - DHCP agent
+ii  quantum-l3-agent                             1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - l3 agent
+ii  quantum-metadata-agent                       1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - metadata agent
+ii  quantum-plugin-openvswitch                   1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - Open vSwitch plugin
+ii  quantum-plugin-openvswitch-agent             1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - Open vSwitch plugin agent
+ii  quantum-server                               1:2013.1.2-0ubuntu1~cloud0                    Quantum is a virtual network service for Openstack - server

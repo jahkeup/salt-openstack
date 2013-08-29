@@ -1,4 +1,5 @@
 include:
+  - openstack.database.repo
   - openstack.database.python
 
 {% set openstack = pillar['openstack'] -%}
@@ -13,6 +14,7 @@ openstack-database-server:
     - name: mysql
     - require:
         - pkg: openstack-database-server
+        - sls: openstack.dataabase.repo
 
 {% elif db['proto'] == 'postgresql' %}
 {% set db_module = 'postgres' -%}
@@ -23,12 +25,13 @@ openstack-database-server:
     - name: postgresql
     - require:
         - pkg: openstack-database-server
+        - sls: openstack-database-repo
 
 {% endif %}
 
-{% for database in ['keystone','nova','quantum','cinder','glance'] %}
-openstack-{{ database }}-database:
-
-{% endfor %}
+{# {% for database in ['keystone','nova','quantum','cinder','glance'] %} #}
+{# openstack-{{ database }}-database: #}
+  
+{# {% endfor %} #}
 
 
