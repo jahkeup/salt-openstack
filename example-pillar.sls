@@ -3,14 +3,33 @@ openstack:
     debug: True
     verbose: True
   db:
-    server: 69.43.73.66
+    server: 33.33.33.10
     proto: mysql
     port: 3306
+    connection:
+      host: 33.33.33.10
+      user: root
+      pass: password
+      port: 3306
   auth:
     server: 69.43.73.66
     proto: http
     port: 35357
     service: service            # the service_tenant to auth as
+    connection:                 # Connection must be made by an admin
+      user: admin               # tenant user. This is typically the 
+      password: password        # same user as you create with keystone
+      insecure: True            # insecure: for non-ssl
+  keystone:
+    endpoints:
+      - 69.43.73.66
+    db:
+      name: keystone
+      username: keystone
+      password: keystonedbpass
+    service:                    # This is the default admin account
+      username: admin
+      password: adminpassword
   rabbit:
     server: 69.43.73.66
     username: guest
@@ -28,16 +47,6 @@ openstack:
     service:
       username: nova
       password: novapassword
-  keystone:
-    endpoints:
-      - 69.43.73.66
-    db:
-      name: keystone
-      username: keystone
-      password: keystonedbpass
-    service:
-      username: keystone
-      password: keystonepass
   quantum:
     server:
       server: 69.43.73.66

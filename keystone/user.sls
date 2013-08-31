@@ -6,3 +6,5 @@ keystone:
     - uid: 220
     - gid: 220
     - home: /var/lib/keystone
+    - require:
+        - group: keystone
