@@ -9,7 +9,6 @@
 
 include:
   - openstack.keystone.user
-  - openstack.database.client
   - openstack.database.python
   - openstack.database.keystone
 

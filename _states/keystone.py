@@ -106,7 +106,8 @@ def tenant_present(name,description=None,enabled=True,users=None, **connargs):
 
 
 
-def user_present(name,password,email,tenant_id=None,enabled=True, **connargs):
+def user_present(name,password,email,tenant_id=None,enabled=True,role=None, 
+                 **connargs):
     user = _keystone('user_get',name=name,**connargs)
     if not _is_error(user):
         return _changelog(name,comment="User is present")
@@ -122,3 +123,5 @@ def service_present(name,service_type,id=None,description=None, **connargs):
                         description=description,**connargs)
     return _changelog(name,changes=service,comment="Added service")
 
+def role_present(name,**connargs):
+    return _changelog(name,status=False,comment="Not implemented.")
