@@ -15,7 +15,7 @@ service-tenant:
   keystone.tenant_present:
     - name: service
     - description: Service Tenant
-    - connection_endpoint: {{endoint}}
+    - connection_endpoint: {{endpoint}}
     - connection_token: {{token}}
     - users:
         {% for service in ['nova','quantum','cinder','glance'] %}

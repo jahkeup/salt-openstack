@@ -124,4 +124,10 @@ def service_present(name,service_type,id=None,description=None, **connargs):
     return _changelog(name,changes=service,comment="Added service")
 
 def role_present(name,**connargs):
-    return _changelog(name,status=False,comment="Not implemented.")
+    if _keystone('user_role_exists',name,**connargs):
+        return _changelog(name,comment="Role is present")
+    role = _keystone('user_role_create',name, **connargs)
+    changes = {
+        name: role.__dict__
+    }
+    return _changelog(name,changes=changes,comment="Added Role {0}".format(name))
