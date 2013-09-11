@@ -20,6 +20,10 @@ openstack:
       user: admin               # tenant user. This is typically the 
       password: password        # same user as you create with keystone
       insecure: True            # insecure: for non-ssl
+    backend:
+      server: 69.43.73.66
+      proto: http
+      port: 5000
   keystone:
     endpoints:
       - 69.43.73.66

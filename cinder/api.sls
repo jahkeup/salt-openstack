@@ -2,21 +2,22 @@ include:
   - openstack.repo
   - openstack.cinder.user
 
-cinder-api:
+{% for subservice in ['api','scheduler','volume'] %}
+cinder-{{subservice}}:
   pkg.installed:
     - require:
         - user: cinder
 
-cinder-common:
-  pkg.installed:
+  service.running:
+    - watch:
+      - file: '/etc/cinder/cinder.conf'
+      - file: '/etc/cinder/api-paste.ini'
+      - pkg: cinder-{{subservice}}
     - require:
-        - pkg: cinder-api
-
-cinder-client:
-  pkg.installed:
-    - pkgs:
-        - python-cinder
-        - python-cinderclient
+      - file: '/etc/cinder/cinder.conf'
+      - file: '/etc/cinder/api-paste.ini'
+      - pkg: cinder-{{subservice}}
+{% endfor %}
 
 '/etc/cinder/cinder.conf':
   file.managed:
@@ -28,3 +29,12 @@ cinder-client:
         - user: cinder
         - pkg: cinder-api
 
+/etc/cinder/cinder.conf:
+  file.managed:
+    - source: salt://openstack/cinder/conf/api-paste.ini
+    - template: jinja
+    - user: cinder
+    - group: cinder
+    - require:
+        - user: cinder
+        - pkg: cinder-api
