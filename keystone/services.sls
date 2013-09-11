@@ -18,11 +18,14 @@ service-tenant:
     - connection_endpoint: {{endpoint}}
     - connection_token: {{token}}
     - users:
-        {% for service in ['nova','quantum','cinder','glance'] %}
-        {% set info = openstack[service]['service'] %}
+        {% for service_tenant in ['nova','quantum','cinder','glance'] %}
+        {% set info = openstack[service_tenant]['service'] %}
 
-        {{service}}:
-           - name: {{info['username']}}
-           - email: {{info['username']}}
-           - password: {{info['password']}}
+        {{service_tenant}}:
+          - name: {{info['username']}}
+          - email: {{info['username']}}
+          - password: {{info['password']}}
+          - role: admin
+          - require:
+              - keystone: admin-role
         {% endfor %}

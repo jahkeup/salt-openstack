@@ -113,6 +113,10 @@ def user_present(name,password,email,tenant_id=None,enabled=True,role=None,
         return _changelog(name,comment="User is present")
     user = _keystone('user_create',name,password,email,tenant_id=tenant_id,
                      enabled=enabled,**connargs)
+    if role:
+        if isinstance(role,dict) and 'name' in role:
+            role = role.get('name')
+        _keystone('user_role_add',role,user, **connargs)
     return _changelog(name,changes=user,comment="Added user")
 
 def service_present(name,service_type,id=None,description=None, **connargs):
