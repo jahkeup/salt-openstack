@@ -25,13 +25,7 @@ openvswitch-switch:
   pkg.installed:
     - pkgs:
         - openvswitch-switch
-        - openvswitch-datapath-source
-
-# openvswitch-datapath-module:
-#   pkg.installed:
-#     - name: openvswitch-datapath-module-{{ grains['kernelrelease'] }}
-#     - require:
-#         - pkg: openvswitch-switch
+        - openvswitch-datapath-dkms
 
 openvswitch-service:
   service.running:
@@ -40,19 +34,11 @@ openvswitch-service:
     - require:
         - pkg: openvswitch-switch
 
-manual-compiled-ovs:
-  cmd.wait:
-    - name: |
-        module-assistant auto-install openvswitch-datapath
-    - require:
-        - pkg: kernel.headers
-    - watch:
-        - pkg: openvswitch-switch
-
 {{ quantum['network'].get('integration_bridge','br-int') }}:
   ovs.bridged:
     - require:
-        - pkg: openvswitch-switch
+      - service: openvswitch-service
+
 {{ quantum['network']['bridge_name'] }}:
   ovs.bridged:
     - ports:
@@ -60,7 +46,7 @@ manual-compiled-ovs:
       - {{ port }}
       {% endfor %}
     - require:
-        - pkg: openvswitch-switch
+      - service: openvswitch-switch
 
 /etc/quantum/plugins/openvswitch:
   file.directory:

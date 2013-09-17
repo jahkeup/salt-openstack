@@ -5,3 +5,5 @@ quantum:
     - uid: 222
     - gid: 222
     - home: /var/lib/quantum
+    - require:
+      - group: quantum
