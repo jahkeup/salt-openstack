@@ -1,4 +1,4 @@
-cinder:
+cinder-user:
   group.present:
     - gid: 223
   user.present:

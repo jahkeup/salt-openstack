@@ -6,7 +6,7 @@ include:
 cinder-{{subservice}}:
   pkg.installed:
     - require:
-        - user: cinder
+      - user: cinder-user
 
   service.running:
     - watch:
@@ -26,8 +26,7 @@ cinder-{{subservice}}:
     - user: cinder
     - group: cinder
     - require:
-        - user: cinder
-        - pkg: cinder-api
+      - pkg: cinder-api
 
 /etc/cinder/cinder.conf:
   file.managed:
@@ -36,5 +35,5 @@ cinder-{{subservice}}:
     - user: cinder
     - group: cinder
     - require:
-        - user: cinder
-        - pkg: cinder-api
+      - user: cinder
+      - pkg: cinder-api

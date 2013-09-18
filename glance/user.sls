@@ -1,4 +1,4 @@
-glance:
+glance-user:
   group.present:
     - gid: 224
   user.present:

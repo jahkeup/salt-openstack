@@ -1,15 +1,16 @@
 include:
+  - openstack.repo
   - openstack.quantum.user
   - openstack.quantum.ovs
 
 quantum-server:
   pkg.installed:
     - pkgs: 
-        - quantum-server
-        - python-quantumclient
-        - python-quantum
+      - quantum-server
+      - python-quantumclient
+      - python-quantum
     - require:
-        - user: quantum
+      - user: quantum-user
   service.running:
     - enable: True
     - require:
@@ -24,7 +25,7 @@ quantum-server:
     - group: quantum
     - template: jinja
     - require:
-        - pkg: quantum-server
+      - pkg: quantum-server
 
 quantum-metadata-agent:
   service.running:
@@ -66,7 +67,7 @@ quantum-dhcp-agent:
 quantum-l3-agent:
   pkg.installed:
     - require:
-      - user: quantum
+      - user: quantum-user
   service.running:
     - enable: True
     - require:

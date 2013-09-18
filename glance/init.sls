@@ -1,41 +1,38 @@
 include:
+  - openstack.repo
   - openstack.glance.user
   - openstack.keystone.python
-  - openstack.database.python
 
 /etc/glance:
   file.directory:
     - user: glance
     - group: glance
     - require:
-      - user: glance
       - pkg: glance-api
 
 glance-api:
   pkg.installed:
     - require:
-        - user: glance
-        - pkg: python-keystone
-        - pkg: openstack-database-python
+      - user: glance-user
+      - pkg: python-keystone
   service.running:
     - enable: True
     - require:
-        - pkg: glance-api
+      - pkg: glance-api
     - watch:
-        - file: glance-api-conf
+      - file: glance-api-conf
 
 glance-registry:
   pkg.installed:
     - require:
-        - user: glance
-        - pkg: python-keystone
-        - pkg: openstack-database-python
+      - user: glance
+      - pkg: python-keystone
   service.running:
     - enable: True
     - require:
-        - pkg: glance-registry
+      - pkg: glance-registry
     - watch:
-        - file: glance-registry-conf
+      - file: glance-registry-conf
 
 glance-api-conf:
   file.managed:
@@ -45,7 +42,7 @@ glance-api-conf:
     - source: salt://openstack/glance/conf/glance-api.conf
     - template: jinja
     - require: 
-        - pkg: glance-api
+      - pkg: glance-api
 
 glance-registry-conf:
   file.managed:
@@ -55,4 +52,4 @@ glance-registry-conf:
     - source: salt://openstack/glance/conf/glance-registry.conf
     - template: jinja
     - require:
-        - pkg: glance-registry
+      - pkg: glance-registry

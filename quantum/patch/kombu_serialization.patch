@@ -1,0 +1,11 @@
+--- serialization.py	2013-09-18 15:38:21.607529815 -0400
++++ serialization.py	2013-09-18 15:38:37.683530593 -0400
+@@ -311,7 +311,7 @@
+     """See http://msgpack.sourceforge.net/"""
+     try:
+         import msgpack
+-        registry.register('msgpack', msgpack.packs, msgpack.unpacks,
++        registry.register('msgpack', msgpack.packb, msgpack.unpackb,
+                 content_type='application/x-msgpack',
+                 content_encoding='binary')
+     except ImportError:

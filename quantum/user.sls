@@ -1,4 +1,4 @@
-quantum:
+quantum-user:
   group.present:
     - gid: 222
   user.present:

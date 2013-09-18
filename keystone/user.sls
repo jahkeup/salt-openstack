@@ -1,4 +1,4 @@
-keystone:
+keystone-user:
   group.present:
     - gid: 220
 
