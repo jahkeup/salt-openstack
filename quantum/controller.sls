@@ -14,9 +14,20 @@ quantum-server:
 '/etc/quantum/quantum.conf':
   file.managed:
     - source: salt://openstack/quantum/conf/quantum.conf
+    - user: quantum
+    - group: quantum
     - template: jinja
     - require:
         - pkg: quantum-server
+
+'/etc/quantum/metadata_agent.ini':
+  file.managed:
+    - source: salt://openstack/quantum/conf/metadata_agent.ini
+    - user: quantum
+    - group: quantum
+    - template: jinja
+    - require:
+      - pkg: quantum-server
 
 quantum-dhcp-agent:
   pkg.installed:
@@ -26,6 +37,8 @@ quantum-dhcp-agent:
 '/etc/quantum/dhcp_agent.ini':
   file.managed:
     - source: salt://openstack/quantum/conf/dhcp_agent.ini
+    - user: quantum
+    - group: quantum
     - template: jinja
     - require:
         - pkg: quantum-dhcp-agent
@@ -38,6 +51,8 @@ quantum-l3-agent:
 '/etc/quantum/l3_agent.ini':
   file.managed:
     - source: salt://openstack/quantum/conf/l3_agent.ini
+    - user: quantum
+    - group: quantum
     - template: jinja
     - require:
         - pkg: quantum-l3-agent
