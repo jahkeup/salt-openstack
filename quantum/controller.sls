@@ -10,6 +10,12 @@ quantum-server:
         - python-quantum
     - require:
         - user: quantum
+  service.running:
+    - enable: True
+    - require:
+      - file: '/etc/quantum/quantum.conf'
+    - watch:
+      - file: '/etc/quantum/quantum.conf'
 
 '/etc/quantum/quantum.conf':
   file.managed:
@@ -19,6 +25,14 @@ quantum-server:
     - template: jinja
     - require:
         - pkg: quantum-server
+
+quantum-metadata-agent:
+  service.running:
+    - enable: True
+    - require:
+      - file: '/etc/quantum/metadata_agent.ini'
+    - watch:
+      - file: '/etc/quantum/metadata_agent.ini'
 
 '/etc/quantum/metadata_agent.ini':
   file.managed:
@@ -33,6 +47,12 @@ quantum-dhcp-agent:
   pkg.installed:
     - require:
         - user: quantum
+  service.running:
+    - enable: True
+    - require:
+      - file: '/etc/quantum/dhcp_agent.ini'
+    - watch:
+      - file: '/etc/quantum/dhcp_agent.ini'
 
 '/etc/quantum/dhcp_agent.ini':
   file.managed:
@@ -46,7 +66,13 @@ quantum-dhcp-agent:
 quantum-l3-agent:
   pkg.installed:
     - require:
-        - user: quantum
+      - user: quantum
+  service.running:
+    - enable: True
+    - require:
+      - file: '/etc/quantum/l3_agent.ini'
+    - watch:
+      - file: '/etc/quantum/l3_agent.ini'
 
 '/etc/quantum/l3_agent.ini':
   file.managed:
