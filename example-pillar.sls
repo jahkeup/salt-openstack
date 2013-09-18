@@ -57,6 +57,7 @@ openstack:
       proto: http
       port: 9696
     network:
+      domain: cld.example.net
       type: vlan
       bridge_name: br-osgn
       vlan_range: 550:610
