@@ -6,7 +6,7 @@ include:
 nova-compute-kvm:
   pkg.installed:
     - require:
-        - user: nova
+      - user: nova-user
 
 nova-compute:
   service.running:
@@ -19,5 +19,4 @@ nova-compute:
     - user: nova
     - group: nova
     - require:
-      - user: nova
       - pkg: nova-compute-kvm

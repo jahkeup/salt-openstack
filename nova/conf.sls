@@ -5,7 +5,7 @@ include:
   - user: nova
   - group: nova
   - require:
-      - user: nova
+      - user: nova-user
 
 {% for conf in 'nova.conf','api-paste.ini','policy.json' %}
 '/etc/nova/{{conf}}':
@@ -15,6 +15,6 @@ include:
     - user: nova
     - group: nova
     - require:
-      - user: nova
+      - user: nova-user 
       - file.directory: '/etc/nova'
 {% endfor %}
