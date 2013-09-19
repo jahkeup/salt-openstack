@@ -9,12 +9,12 @@ include:
 quantum-plugin-openvswitch:
   pkg.installed:
     - require: 
-        - user: quantum
+        - user: quantum-user
 
 quantum-plugin-openvswitch-agent:
   pkg.installed:
     - require: 
-        - user: quantum
+        - user: quantum-user
 
   service.running:
     - enable: True
@@ -53,7 +53,6 @@ openvswitch-service:
     - user: quantum
     - group: quantum
     - require:
-      - user: quantum
       - pkg: quantum-plugin-openvswitch
 
 '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini':
@@ -64,7 +63,6 @@ openvswitch-service:
     - template: jinja
     - require:
       - pkg: quantum-plugin-openvswitch
-      - user: quantum
       - file.directory: /etc/quantum/plugins/openvswitch
 
 '/etc/quantum/plugin.ini':
