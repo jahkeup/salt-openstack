@@ -4,6 +4,12 @@
 {% set authurl = auth.get('proto','http') + "://"+ auth['server'] -%}
 {% set authpass = keystone['service']['password'] -%}
 
+# This state assumes that the database is already installed &
+# provisioned, this also includes the necessary grants and users. The
+# installation will succeed if the database isn't configured however,
+# the services will fail to remain started and will throw errors in
+# /var/log/keystone
+
 include:
   - openstack.repo
   - openstack.keystone.user
@@ -17,8 +23,6 @@ keystone:
       - python-keystoneclient
     - require:
       - user: keystone-user
-      - sls: openstack.database.python
-      - mysql_grants: keystone-database-grant
   file.managed:
     - name: /etc/keystone/keystone.conf
     - source: salt://openstack/keystone/conf/keystone.conf
@@ -32,8 +36,8 @@ keystone:
     - require:
       - pkg: keystone
     - watch:
-        - file: keystone
-        - cmd: sync-keystone-db
+      - file: keystone
+      - cmd: sync-keystone-db
 
 sync-keystone-db:
   cmd.wait:
@@ -48,7 +52,7 @@ sync-keystone-db:
 keystonerc:
   file.managed:
     - name: /root/keystonerc
-    - mode: 500
+    - mode: 400
     - user: root
     - group: root
     - contents: |
