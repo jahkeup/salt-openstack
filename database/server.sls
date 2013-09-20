@@ -1,2 +1,2 @@
 include:
-  - mariadb.server
+  - mysql.server
