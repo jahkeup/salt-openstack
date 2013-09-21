@@ -13,13 +13,13 @@
 include:
   - openstack.repo
   - openstack.keystone.user
-  - openstack.keystone.services
 
 keystone:
   pkg.installed:
     - pkgs:
       - keystone
       - python-keystone
+      - python-mysqldb
       - python-keystoneclient
     - require:
       - user: keystone-user
