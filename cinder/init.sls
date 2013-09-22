@@ -5,7 +5,7 @@ include:
   - openstack.patch.kombu
   - openstack.cinder.user
 
-ceph-integration:
+cinder-ceph-integration:
   pkg.installed:
     - pkgs:
       - python-ceph
@@ -19,7 +19,7 @@ cinder-{{subservice}}:
   pkg.installed:
     - require:
       - user: cinder-user
-      - pkg: ceph-integration
+      - pkg: cinder-ceph-integration
       - sls: openstack.patch.kombu
   service.running:
     - watch:

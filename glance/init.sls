@@ -5,7 +5,7 @@ include:
   - openstack.glance.user
   - openstack.keystone.python
 
-ceph-integration:
+glance-ceph-integration:
   pkg.installed:
     - pkgs:
       - python-ceph
@@ -25,7 +25,7 @@ glance-api:
     - require:
       - user: glance-user
       - pkg: python-keystone
-      - pkg: ceph-integration
+      - pkg: glance-ceph-integration
       - sls: openstack.patch.kombu
   service.running:
     - enable: True
@@ -47,7 +47,7 @@ glance-registry:
   pkg.installed:
     - require:
       - user: glance
-      - pkg: ceph-integration
+      - pkg: glance-ceph-integration
       - pkg: python-keystone
   service.running:
     - enable: True
