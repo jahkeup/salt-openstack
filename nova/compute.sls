@@ -8,6 +8,7 @@ include:
   - openstack.repo
   - openstack.ceph.repo
   - openstack.ceph.keys
+  - openstack.patch.kombu
   - openstack.nova.user
   - openstack.nova.conf
 
