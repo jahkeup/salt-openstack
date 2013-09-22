@@ -41,7 +41,7 @@ instances-user:
       - cmd: instances-user
   cmd.run: 
     - name: >- 
-        ceph auth get-or-create client.images
+        ceph auth get-or-create client.instances
         mon 'allow r'
         mds 'allow'
         osd 'allow class-read object_prefix rbd_children,
