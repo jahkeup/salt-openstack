@@ -1,12 +1,13 @@
 include:
   - openstack.repo
+  - openstack.patch.kombu
   - openstack.nova.conf
 
 nova-api:
   pkg.installed:
     - require:
       - user: nova-user
-
+      - sls: openstack.patch.kombu
   service.running:
     - enable: True
     - require:
