@@ -31,8 +31,17 @@ glance-api:
     - enable: True
     - require:
       - pkg: glance-api
+      - cmd: glance-db-sync
     - watch:
       - file: glance-api-conf
+
+glance-db-sync:
+  cmd.wait:
+    - name: glance-manage db_sync
+    - require:
+      - pkg: glance-api
+    - watch:
+      - pkg: glance-api
 
 glance-registry:
   pkg.installed:
