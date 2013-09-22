@@ -10,12 +10,12 @@ volumes-user:
       - cmd: volumes-user
   cmd.run: 
     - name: >- 
-      ceph auth get-or-create client.volumes \
-      mon 'allow r' \
-      mds 'allow'
-      osd 'allow class-read object_prefix rbd_children,
-      allow rwx pool=volumes,
-      allow rx pool=images' > /etc/ceph/ceph.client.volumes.keyring
+        ceph auth get-or-create client.volumes \
+        mon 'allow r' \
+        mds 'allow'
+        osd 'allow class-read object_prefix rbd_children,
+        allow rwx pool=volumes,
+        allow rx pool=images' > /etc/ceph/ceph.client.volumes.keyring
 
 
 images-user:
@@ -26,11 +26,11 @@ images-user:
       - cmd: images-user
   cmd.run: 
     - name: >- 
-      ceph auth get-or-create client.images \
-      mon 'allow r' \
-      mds 'allow' \
-      osd 'allow class-read object_prefix rbd_children,
-      allow rwx pool=images' > /etc/ceph/ceph.client.images.keyring
+        ceph auth get-or-create client.images \
+        mon 'allow r' \
+        mds 'allow' \
+        osd 'allow class-read object_prefix rbd_children,
+        allow rwx pool=images' > /etc/ceph/ceph.client.images.keyring
 
 
 instances-user:
@@ -41,9 +41,9 @@ instances-user:
       - cmd: instances-user
   cmd.run: 
     - name: >- 
-      ceph auth get-or-create client.images \
-      mon 'allow r' \
-      mds 'allow' \
-      osd 'allow class-read object_prefix rbd_children,
-      allow rwx pool=instances' > /etc/ceph/ceph.client.instances.keyring
+        ceph auth get-or-create client.images \
+        mon 'allow r' \
+        mds 'allow' \
+        osd 'allow class-read object_prefix rbd_children,
+        allow rwx pool=instances' > /etc/ceph/ceph.client.instances.keyring
       
