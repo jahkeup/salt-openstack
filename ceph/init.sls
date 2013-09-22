@@ -6,6 +6,7 @@ ceph:
     - pkgs:
       - ceph
       - ceph-mds
+      - ceph-fs-common
     - require:
       - pkgrepo: ceph-repo
 ceph-example-conf:
