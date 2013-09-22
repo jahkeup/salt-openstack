@@ -25,6 +25,7 @@ nova-compute:
     - enable: True
     - require:
       - pkg: nova-compute-kvm
+      - cmd: ceph-fs
 
 /etc/nova:
   file.directory:

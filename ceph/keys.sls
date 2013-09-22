@@ -1,17 +1,26 @@
 {% set ceph = pillar['openstack']['ceph'] %}
-include: 
-  - ceph.client
-
-ceph-keys:
+ceph-dir:
   file.directory:
     - name: /etc/ceph
 
-{% for client in ['nova'] %}
+{% for client in ['nova','images','volumes'] %}
 ceph-{{ ceph[client]['user'] }}-key:
   file.managed:
-    - name: /etc/ceph/client.{{ ceph[client]['user'] }}.secret
-    - contents: {{ ceph[client]['key'] }}
+    - name: /etc/ceph/ceph.client.{{ ceph[client]['user'] }}.keyring
+    - mode: 444
+    - contents: |
+        [client.{{ceph[client]['user']}}]
+          key = {{ ceph[client]['key'] }}
+          
     - require:
-        - file: ceph-keys
-  
+        - file: ceph-dir
+        - file: ceph-{{ceph[client]['user']}}-secret
+
+ceph-{{ceph[client]['user']}}-secret:
+  file.managed:
+    - name: /etc/ceph/ceph.client.{{ceph[client]['user']}}.secret
+    - mode: 444
+    - contents: {{ceph[client]['key']}}
+    - require:
+      - file: ceph-dir
 {% endfor %}
