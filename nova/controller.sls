@@ -33,8 +33,10 @@ nova-client:
       - python-novaclient
 
 nova-conductor:
-  pkg:
-    - installed
+  pkg.installed:
+    - require:
+      - pkg: nova-api
+      - cmd: nova-db-sync
   service.running:
     - enable: True
     - require:
@@ -47,7 +49,8 @@ nova-conductor:
 nova-scheduler:
   pkg.installed:
     - require:
-      - user: nova-user
+      - cmd: nova-db-sync
+      - pkg: nova-api
   service.running:
     - enable: True
     - require:
