@@ -32,6 +32,14 @@ cinder-{{subservice}}:
       - pkg: cinder-{{subservice}}
 {% endfor %}
 
+cinder-client:
+  pkg.installed:
+    - pkgs:
+        - python-cinder
+        - python-cinderclient
+    - require:
+      - pkg: cinder-api
+
 cinder-db-sync:
   cmd.wait:
     - name: cinder-manage db sync
