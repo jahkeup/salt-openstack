@@ -3,7 +3,7 @@ ceph-dir:
   file.directory:
     - name: /etc/ceph
 
-{% for client in ['nova','glance','cinder'] %}
+{% for client in ['instances','glance','cinder'] %}
 ceph-{{ ceph[client]['user'] }}-key:
   file.managed:
     - name: /etc/ceph/ceph.client.{{ ceph[client]['user'] }}.keyring
