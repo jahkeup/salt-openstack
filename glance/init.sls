@@ -52,6 +52,7 @@ glance-registry:
   service.running:
     - enable: True
     - require:
+      - cmd: glance-db-sync
       - pkg: glance-registry
     - watch:
       - file: glance-registry-conf
