@@ -26,7 +26,9 @@ cinder-{{subservice}}:
       - file: '/etc/cinder/cinder.conf'
       - pkg: cinder-{{subservice}}
       - cmd: cinder-service-cephargs
+      - file: '/etc/cinder/api-paste.ini'
     - require:
+      - file: '/etc/cinder/api-paste.ini'
       - cmd: cinder-db-sync
       - file: '/etc/cinder/cinder.conf'
       - pkg: cinder-{{subservice}}
@@ -74,3 +76,12 @@ cinder-service-cephargs:
     - require:
       - user: cinder
       - pkg: cinder-api
+
+'/etc/cinder/api-paste.ini':
+  file.managed:
+    - source: salt://openstack/cinder/conf/api-paste.ini
+    - template: jinja
+    - user: cinder
+    - group: cinder
+    - require:
+      - user: cinder
