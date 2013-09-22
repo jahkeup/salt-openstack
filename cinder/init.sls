@@ -25,9 +25,18 @@ cinder-{{subservice}}:
       - pkg: cinder-{{subservice}}
       - cmd: cinder-service-cephargs
     - require:
+      - cmd: cinder-db-sync
       - file: '/etc/cinder/cinder.conf'
       - pkg: cinder-{{subservice}}
 {% endfor %}
+
+cinder-db-sync:
+  cmd.wait:
+    - name: cinder-manage db sync
+    - require:
+      - pkg: cinder-api
+    - watch:
+      - pkg: cinder-api
 
 cinder-service-cephargs:
   cmd.wait:
