@@ -1,6 +1,7 @@
 include:
   - openstack.repo
   - openstack.ceph.repo
+  - openstack.ceph.keys
   - openstack.cinder.user
 
 ceph-integration:
@@ -10,6 +11,7 @@ ceph-integration:
       - ceph-common
     - require:
       - pkgrepo: ceph-repo
+      - sls: openstack.ceph.keys  
 
 {% for subservice in ['api','scheduler','volume'] %}
 cinder-{{subservice}}:
@@ -34,7 +36,6 @@ cinder-service-cephargs:
       - pkg: cinder-volume
     - watch:
       - pkg: cinder-volume
-
 
 '/etc/cinder/cinder.conf':
   file.managed:
