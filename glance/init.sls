@@ -1,7 +1,16 @@
 include:
   - openstack.repo
+  - openstack.ceph.repo
   - openstack.glance.user
   - openstack.keystone.python
+
+ceph-integration:
+  pkg.installed:
+    - pkgs:
+      - python-ceph
+      - ceph-common
+    - require:
+      - pkgrepo: ceph-repo
 
 /etc/glance:
   file.directory:
@@ -15,6 +24,7 @@ glance-api:
     - require:
       - user: glance-user
       - pkg: python-keystone
+      - pkg: ceph-integration
   service.running:
     - enable: True
     - require:
@@ -26,6 +36,7 @@ glance-registry:
   pkg.installed:
     - require:
       - user: glance
+      - pkg: ceph-integration
       - pkg: python-keystone
   service.running:
     - enable: True
