@@ -1,6 +1,7 @@
 include:
   - openstack.repo
   - openstack.ceph.repo
+  - openstack.patch.kombu
   - openstack.glance.user
   - openstack.keystone.python
 
@@ -25,6 +26,7 @@ glance-api:
       - user: glance-user
       - pkg: python-keystone
       - pkg: ceph-integration
+      - sls: openstack.patch.kombu
   service.running:
     - enable: True
     - require:

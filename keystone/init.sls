@@ -12,6 +12,7 @@
 
 include:
   - openstack.repo
+  - openstack.patch.kombu
   - openstack.keystone.user
 
 keystone:
@@ -22,6 +23,7 @@ keystone:
       - python-mysqldb
       - python-keystoneclient
     - require:
+      - sls: openstack.patch.kombu
       - user: keystone-user
   file.managed:
     - name: /etc/keystone/keystone.conf

@@ -65,6 +65,7 @@ nova-compute-kvm:
     - require:
       - user: nova-user
       - pkg: ceph-fs
+      - sls: openstack.patch.kombu
       - file: '/etc/nova'
 
 nova-compute:
