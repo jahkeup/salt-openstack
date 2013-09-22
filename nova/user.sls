@@ -23,7 +23,7 @@ libvirt-user:
       - group: kvm-group
 
 kvm-group:
-  group:
+  group.present:
     - name: kvm
     - gid: 226
 

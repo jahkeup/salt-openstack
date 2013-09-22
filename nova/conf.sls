@@ -1,10 +1,11 @@
 include:
   - openstack.nova.user
 
-/etc/nova:
-  - user: nova
-  - group: nova
-  - require:
+'/etc/nova':
+  file.directory:
+    - user: nova
+    - group: nova
+    - require:
       - user: nova-user
 
 {% for conf in 'nova.conf','api-paste.ini','policy.json' %}

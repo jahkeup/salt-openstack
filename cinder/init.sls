@@ -22,11 +22,20 @@ cinder-{{subservice}}:
       - file: '/etc/cinder/cinder.conf'
       - file: '/etc/cinder/api-paste.ini'
       - pkg: cinder-{{subservice}}
+      - cmd: cinder-service-cephargs
     - require:
       - file: '/etc/cinder/cinder.conf'
       - file: '/etc/cinder/api-paste.ini'
       - pkg: cinder-{{subservice}}
 {% endfor %}
+
+cinder-service-cephargs:
+  cmd.wait:
+    - name: sed -i '1ienv CEPH_ARGS="--id volumes"' /etc/init/cinder-volume.conf 
+    - require:
+      - pkg: cinder-volume
+    - watch:
+      - pkg: cinder-volume
 
 
 '/etc/cinder/cinder.conf':
