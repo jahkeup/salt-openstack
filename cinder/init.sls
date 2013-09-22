@@ -47,7 +47,7 @@ cinder-service-cephargs:
 
 /etc/cinder/cinder.conf:
   file.managed:
-    - source: salt://openstack/cinder/conf/api-paste.ini
+    - source: salt://openstack/cinder/conf/cinder.conf
     - template: jinja
     - user: cinder
     - group: cinder
