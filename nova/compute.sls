@@ -1,6 +1,6 @@
 {% set openstack = pillar['openstack'] -%}
 {% set ceph = openstack['ceph'] -%}
-{% set cephfs = openstack['ceph']['nova'] -%}
+{% set cephfs = openstack['ceph']['instances'] -%}
 {% set images = ceph['images'] -%}
 {% set volumes = ceph['cinder'] -%}
 
