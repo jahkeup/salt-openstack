@@ -20,12 +20,10 @@ cinder-{{subservice}}:
   service.running:
     - watch:
       - file: '/etc/cinder/cinder.conf'
-      - file: '/etc/cinder/api-paste.ini'
       - pkg: cinder-{{subservice}}
       - cmd: cinder-service-cephargs
     - require:
       - file: '/etc/cinder/cinder.conf'
-      - file: '/etc/cinder/api-paste.ini'
       - pkg: cinder-{{subservice}}
 {% endfor %}
 
