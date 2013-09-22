@@ -98,7 +98,15 @@ openstack:
         RSA-KEY asdflkjsaflkasdflasdlfkasjdkdksdfd
         aksdlfjasldkfjasdflkjsljfksjdfjskdfsdfsdfd
         asdfasdfasdfasdfasdfasdfsdfsddsdfsdfsdfsds
-      
+    cinder:
+      pool: volumes
+      user: volumes
+      uuid: 1100-1000-1020-1201
+      key: >-
+        RSA-KEY asdfasdfhajksdhflkasdjkflahskjashdf
+        akjshdfkjahsdkflhljasdhfkhasjldkfhlasdjkfhd
+        kajshdfkjlhasldfhlkasdhfshdkfksdhfkhksdhfjk
+
     nova:
       path: /nova
       pool: instances
@@ -108,3 +116,37 @@ openstack:
         RSA-KEY asdfasdfhajksdhflkasdjkflahskjashdf
         akjshdfkjahsdkflhljasdhfkhasjldkfhlasdjkfhd
         kajshdfkjlhasldfhlkasdhfshdkfksdhfkhksdhfjk
+  endpoints:
+    nova:
+      public: http://162.219.98.18:8774/v2/$(tenant_id)s
+      internal: http://140.186.77.2:8774/v2/$(tenant_id)s
+      admin: http://140.186.77.2:8774/v2/$(tenant_id)s
+    volume:
+      public: http://162.219.98.18:8776/v1/$(tenant_id)s
+      internal: http://140.186.77.2:8776/v1/$(tenant_id)s
+      admin: http://140.186.77.2:8776/v1/$(tenant_id)s
+    glance:
+      public: http://162.219.98.18:9292/v2
+      internal: http://140.186.77.2:9292/v2
+      admin: http://140.186.77.2:9292/v2
+    swift:
+      public: http://162.219.98.18:8080/v1/AUTH_$(tenant_id)s
+      internal: http://140.186.77.2:8080/v1/AUTH_$(tenant_id)s
+      admin: http://140.186.77.2:8080/v1
+    ec2:
+      public: http://162.219.98.18:8773/services/Cloud
+      internal: http://140.186.77.2:8773/services/Cloud
+      admin: http://140.186.77.2:8773/services/Admin
+    quantum:
+      public: http://162.219.98.20:9696/
+      internal: http://140.186.77.3:9696/
+      admin: http://140.186.77.3:9696/
+    keystone:
+      public: http://162.219.98.18:5000/v2.0
+      internal: http://140.186.77.2:5000/v2.0
+      admin: http://140.186.77.2:35357/v2.0
+
+ 
+
+
+      
