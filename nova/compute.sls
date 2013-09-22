@@ -22,7 +22,7 @@ ceph-fs:
     - require:
       - pkgrepo: ceph-repo
   cmd.run:
-    - name: mount /var/lib/nova/instances
+    - name: mount -a
     - require:
       - cmd: ceph-fs-fstab
       - file: ceph-{{cephfs['user']}}-key
