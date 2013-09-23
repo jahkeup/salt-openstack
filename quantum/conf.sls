@@ -14,10 +14,6 @@ include:
     - user: quantum
     - group: quantum
     - mode: 775
-    - recurse:
-      - user
-      - group
-      - mode
     - require:
       - file: /etc/quantum/plugins/openvswitch
 

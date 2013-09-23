@@ -32,8 +32,6 @@ openvswitch-service:
     - enable: True
     - require:
       - pkg: quantum-plugin-openvswitch
-    - watch:
-      - pkg: quantum-plugin-openvswitch
 
 {{ quantum['network'].get('integration_bridge','br-int') }}:
   ovs.bridged:
