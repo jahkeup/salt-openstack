@@ -12,6 +12,7 @@ quantum-server:
       - python-quantum
     - require:
       - user: quantum-user
+      - file: /etc/quantum/quantum.conf
       - sls: openstack.patch.kombu
   service.running:
     - enable: True
@@ -20,55 +21,37 @@ quantum-server:
     - watch:
       - file: '/etc/quantum/quantum.conf'
 
-'/etc/quantum/quantum.conf':
-  file.managed:
-    - source: salt://openstack/quantum/conf/quantum.conf
-    - user: quantum
-    - group: quantum
-    - template: jinja
-    - require:
-      - pkg: quantum-server
-
 quantum-metadata-agent:
+  pkg:
+    - installed
   service.running:
     - enable: True
     - require:
+      - pkg: quantum-metadata-agent
+      - service: quantum-server
       - file: '/etc/quantum/metadata_agent.ini'
     - watch:
+      - file: '/etc/quantum/quantum.conf'
       - file: '/etc/quantum/metadata_agent.ini'
-
-'/etc/quantum/metadata_agent.ini':
-  file.managed:
-    - source: salt://openstack/quantum/conf/metadata_agent.ini
-    - user: quantum
-    - group: quantum
-    - template: jinja
-    - require:
-      - pkg: quantum-server
 
 quantum-dhcp-agent:
   pkg.installed:
     - require:
-        - user: quantum
+      - user: quantum
+      - pkg: quantum-server
+      - file: '/etc/quantum/dhcp_agent.ini'
   service.running:
     - enable: True
     - require:
+      - pkg: quantum-dhcp-agent
       - file: '/etc/quantum/dhcp_agent.ini'
     - watch:
       - file: '/etc/quantum/dhcp_agent.ini'
 
-'/etc/quantum/dhcp_agent.ini':
-  file.managed:
-    - source: salt://openstack/quantum/conf/dhcp_agent.ini
-    - user: quantum
-    - group: quantum
-    - template: jinja
-    - require:
-        - pkg: quantum-dhcp-agent
-
 quantum-l3-agent:
   pkg.installed:
     - require:
+      - file: '/etc/quantum/l3_agent.ini'
       - user: quantum-user
   service.running:
     - enable: True
@@ -76,13 +59,5 @@ quantum-l3-agent:
       - file: '/etc/quantum/l3_agent.ini'
     - watch:
       - file: '/etc/quantum/l3_agent.ini'
-
-'/etc/quantum/l3_agent.ini':
-  file.managed:
-    - source: salt://openstack/quantum/conf/l3_agent.ini
-    - user: quantum
-    - group: quantum
-    - template: jinja
-    - require:
-        - pkg: quantum-l3-agent
+      - file: '/etc/quantum/quantum.conf'
 

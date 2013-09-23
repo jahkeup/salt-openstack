@@ -4,35 +4,31 @@
 include:
   - openstack.repo
   - openstack.quantum.user
+  - openstack.quantum.conf
   - kernel.headers
 
 quantum-plugin-openvswitch:
   pkg.installed:
+    - pkgs:
+      - openvswitch-switch
+      - openvswitch-datapath-dkms
+      - quantum-plugin-openvswitch
+      - quantum-plugin-openvswitch-agent
     - require: 
-        - user: quantum-user
-
-quantum-plugin-openvswitch-agent:
-  pkg.installed:
-    - require: 
-        - user: quantum-user
-
+      - file: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
+      - user: quantum-user
   service.running:
+    - name: quantum-plugin-openvswitch-agent
     - enable: True
     - require:
-        - pkg: quantum-plugin-openvswitch-agent
-
-openvswitch-switch:
-  pkg.installed:
-    - pkgs:
-        - openvswitch-switch
-        - openvswitch-datapath-dkms
+      - pkg: quantum-plugin-openvswitch
 
 openvswitch-service:
   service.running:
     - name: openvswitch-switch
     - enable: True
     - require:
-        - pkg: openvswitch-switch
+      - pkg: openvswitch-switch
 
 {{ quantum['network'].get('integration_bridge','br-int') }}:
   ovs.bridged:
@@ -48,25 +44,3 @@ openvswitch-service:
     - require:
       - service: openvswitch-switch
 
-/etc/quantum/plugins/openvswitch:
-  file.directory:
-    - user: quantum
-    - group: quantum
-    - require:
-      - pkg: quantum-plugin-openvswitch
-
-'/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini':
-  file.managed:
-    - source: salt://openstack/quantum/conf/plugin.ini
-    - user: quantum
-    - group: quantum
-    - template: jinja
-    - require:
-      - pkg: quantum-plugin-openvswitch
-      - file.directory: /etc/quantum/plugins/openvswitch
-
-'/etc/quantum/plugin.ini':
-  file.symlink:
-    - target: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
-    - require:
-      - file: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
