@@ -31,6 +31,28 @@ nova-client:
     - pkgs:
       - python-nova
       - python-novaclient
+nova-consoleauth:
+  pkg.installed:
+  - require:
+    - pkg: nova-api
+    - cmd: nova-db-sync
+  service.running:
+    - require:
+      - pkg: nova-consoleauth
+    - watch:
+      - file: '/etc/nova/nova.conf'
+
+nova-novncproxy:
+  pkg.installed:
+    - require:
+      - pkg: nova-consoleauth
+      - pkg: nova-api
+      - file: '/etc/nova/nova.conf'
+  service.running:
+    - require:
+      - pkg: nova-novncproxy
+    - watch:
+      - file: '/etc/nova/nova.conf'
 
 nova-conductor:
   pkg.installed:
