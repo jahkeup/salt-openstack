@@ -20,6 +20,9 @@ quantum-plugin-openvswitch:
   service.running:
     - name: quantum-plugin-openvswitch-agent
     - enable: True
+    - watch:
+      - file: '/etc/quantum/quantum.conf'
+      - file: '/etc/quantum/plugins/openvswitch/ovs_quantum_plugin.ini'
     - require:
       - pkg: quantum-plugin-openvswitch
 
