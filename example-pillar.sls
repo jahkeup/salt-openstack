@@ -39,6 +39,8 @@ openstack:
     username: guest
     password: rabbitpassword
   nova:
+    novnc:
+      server: 140.186.77.2
     metadata:
       server: 69.43.73.66
       secret: proxy-shared-secret
