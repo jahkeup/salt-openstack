@@ -40,12 +40,15 @@ quantum-dhcp-agent:
       - user: quantum
       - pkg: quantum-server
       - file: '/etc/quantum/dhcp_agent.ini'
+      - file: '/etc/quantum/dnsmasq.conf'
   service.running:
     - enable: True
     - require:
       - pkg: quantum-dhcp-agent
+      - file: '/etc/quantum/dnsmasq.conf'
       - file: '/etc/quantum/dhcp_agent.ini'
     - watch:
+      - file: '/etc/quantum/dnsmasq.conf'
       - file: '/etc/quantum/dhcp_agent.ini'
 
 quantum-l3-agent:

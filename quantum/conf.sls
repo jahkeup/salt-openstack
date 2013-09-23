@@ -35,6 +35,16 @@ include:
     - require:
       - file: /etc/quantum
 
+'/etc/quantum/dnsmasq.conf':
+  file.managed:
+    - source: salt://openstack/quantum/conf/dnsmasq.conf
+    - template: jinja
+    - user: quantum
+    - group: quantum
+    - mode: 440
+    - require:
+      - file: /etc/quantum
+
 '/etc/quantum/metadata_agent.ini':
   file.managed:
     - source: salt://openstack/quantum/conf/metadata_agent.ini
