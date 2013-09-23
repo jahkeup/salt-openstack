@@ -66,7 +66,7 @@ include:
       - file: /etc/quantum
 '/etc/quantum/l3_agent.ini':
   file.managed:
-    - source: salt://openstack/quantum/conf/l3_agent.ini
+    - source: salt://openstack/quantum/conf/dhcp_agent.ini
     - template: jinja
     - user: quantum
     - group: quantum
