@@ -28,7 +28,9 @@ openvswitch-service:
     - name: openvswitch-switch
     - enable: True
     - require:
-      - pkg: openvswitch-switch
+      - pkg: quantum-plugin-openvswitch
+    - watch:
+      - pkg: quantum-plugin-openvswitch
 
 {{ quantum['network'].get('integration_bridge','br-int') }}:
   ovs.bridged:
@@ -42,5 +44,5 @@ openvswitch-service:
       - {{ port }}
       {% endfor %}
     - require:
-      - service: openvswitch-switch
+      - service: openvswitch-service
 
