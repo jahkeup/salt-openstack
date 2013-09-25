@@ -12,32 +12,36 @@ include:
   - openstack.nova.user
   - openstack.nova.conf
 
-ceph-fs:
-  pkg.installed:
-    - pkgs:
-      - python-ceph
-      - ceph-common
-      - ceph-fs-common
-      - rbd-fuse
-    - require:
-      - pkgrepo: ceph-repo
-  cmd.run:
-    - name: mount -a
-    - require:
-      - cmd: ceph-fs-fstab
-      - file: ceph-{{cephfs['user']}}-key
-      - pkg: nova-compute-kvm
+# ceph-fs:
+#   pkg.installed:
+#     - pkgs:
+#       - python-ceph
+#       - ceph-common
+#       - ceph-fs-common
+#       - rbd-fuse
+#     - require:
+#       - pkgrepo: ceph-repo
+#   cmd.run:
+#     - name: mount -a
+#     - require:
+#       - cmd: ceph-fs-fstab 
+#       - file: ceph-{{cephfs['user']}}-key
+#       - pkg: nova-compute-kvm
 
-ceph-fs-fstab:
-  cmd.wait:
-    - name: >-
-        cp /etc/fstab /etc/fstab.bak && echo 
-        "{{ceph['mon']}}:{{cephfs['path']}} /var/lib/nova/instances ceph name={{cephfs['user']}},secretfile=/etc/ceph/ceph.client.{{cephfs['user']}}.secret 0 0" 
-        >> /etc/fstab
-    - require:
-      - pkg: ceph-fs
-    - watch: 
-      - pkg: ceph-fs
+# ceph-fs-fstab:
+#   cmd.wait:
+#     - name: >-
+#         cp /etc/fstab /etc/fstab.bak && echo 
+#         "{{ceph['mon']}}:{{cephfs['path']}} /var/lib/nova/instances ceph name={{cephfs['user']}},secretfile=/etc/ceph/ceph.client.{{cephfs['user']}}.secret 0 0" 
+#         >> /etc/fstab
+#     - require:
+#       - pkg: ceph-fs
+#     - watch: 
+#       - pkg: ceph-fs
+
+nfs-client:
+  pkg.installed:
+    - name: nfs-common
 
 nova-volumes-secret:
   file.managed:
@@ -65,7 +69,8 @@ nova-compute-kvm:
   pkg.installed:
     - require:
       - user: nova-user
-      - pkg: ceph-fs
+#     - pkg: ceph-fs
+      - pkg: nfs-client
       - sls: openstack.patch.kombu
       - file: '/etc/nova'
 
@@ -73,6 +78,7 @@ nova-compute:
   service.running:
     - enable: True
     - require:
+      - pkg: nfs-client
       - pkg: nova-compute-kvm
-      - cmd: ceph-fs
+#     - cmd: ceph-fs
       - cmd: nova-volumes-secret
