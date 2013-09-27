@@ -1,0 +1,10 @@
+keystone        35357/tcp                       # Keystone authentication services
+keystone-admin  5000/tcp                        # Keystone authentication services (admin)
+cinder          8776/tcp                        # Cinder storage services
+nova            8774/tcp                        # Nova API (openstack port)
+nova-ec2        8773/tcp                        # Nova API (EC2 port)
+nova-novnc      6080/tcp                        # Nova NOVNC proxy
+nova-metadata   8775/tcp                        # Nova Metadata services
+glance          9292/tcp                        # Glance image services
+glance-registry 9191/tcp                        # Glance registry service
+quantum         9696/tcp                        # Quantum network services
