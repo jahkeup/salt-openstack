@@ -53,15 +53,15 @@ sync-keystone-db:
 
 keystonerc:
   file.managed:
-    - name: /root/keystonerc
+    - name: /root/openrc
     - mode: 400
     - user: root
     - group: root
     - contents: |
-        # export OS_USERNAME=admin
-        # export OS_TENANT_NAME="Default Tenant"
-        # export OS_PASSWORD={{authpass}}
-        export SERVICE_TOKEN={{authpass}}
-        # export OS_AUTH_URL="{{authurl}}:{{auth.get('public_port',5000)}}/v2.0/"
-        export SERVICE_ENDPOINT="{{authurl}}:{{auth.get('port',35357)}}/v2.0/"
+        export OS_USERNAME=admin
+        export OS_TENANT_NAME="Default Tenant"
+        export OS_PASSWORD={{authpass}}
+        export OS_AUTH_URL="{{authurl}}:{{auth.get('public_port',5000)}}/v2.0/"
+        # export SERVICE_TOKEN={{authpass}}
+        # export SERVICE_ENDPOINT="{{authurl}}:{{auth.get('port',35357)}}/v2.0/"
 
