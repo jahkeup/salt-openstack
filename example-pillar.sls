@@ -39,6 +39,10 @@ openstack:
     username: guest
     password: rabbitpassword
   nova:
+    workers: 5
+    instances_store:
+      server: 10.0.0.2
+      path: /export/instances
     novnc:
       server: 140.186.77.2
     metadata:
@@ -79,6 +83,7 @@ openstack:
       username: cinder
       password: cinderpass
   glance:
+    workers: 5
     api:
       server: 69.43.73.66
       port:  9292
