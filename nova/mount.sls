@@ -11,5 +11,6 @@ nova-instances-store:
     - group: root
     - contents: |
         #!/usr/bin/env bash
-        mount -t nfs4 -o tcp,noauto {{nova['instances_store']['server']}} \
+        mount -t nfs4 -o tcp,noauto \
+          {{nova['instances_store']['server']}}:{{nova['instances_store']['path']}} \
           /var/lib/nova/instances
