@@ -8,4 +8,4 @@ nova-instances-store:
     - name: /etc/fstab.d/nfs-instances.fstab
     - contents: >-
         {{nova['instances_store']['server']}}:{{nova['instances_store']['path']}}
-        /var/lib/nova/instances	nfs	_netdev,tcp	0	0
+        /var/lib/nova/instances	nfs4	_netdev,tcp,noauto	0	0
