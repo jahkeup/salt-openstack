@@ -12,7 +12,7 @@ include:
   - openstack.nova.user
   - openstack.nova.conf
   - openstack.nova.override
-  - openstack.nova.fstab
+  - openstack.nova.mount
 
 nfs-client:
   pkg.installed:
