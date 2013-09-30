@@ -15,7 +15,7 @@ include:
     - group: quantum
     - mode: 775
     - require:
-      - file: /etc/quantum/plugins/openvswitch
+      - file: /etc/quantum
 
 /etc/quantum/plugins/openvswitch:
   file.directory:
@@ -23,7 +23,7 @@ include:
     - group: quantum
     - mode: 775
     - require:
-      - file: /etc/quantum
+      - file: /etc/quantum/plugins
 
 /etc/quantum/quantum.conf:
   file.managed:
