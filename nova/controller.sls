@@ -17,6 +17,14 @@ nova-api:
       - cmd: nova-db-sync
       - file: '/etc/nova/nova.conf'
       - file: '/etc/nova/api-paste.ini'
+nova-cert:
+  pkg.installed:
+    - require:
+      - pkg: nova-api
+  service.running:
+    - enable: True
+      - require:
+        - pkg: nova-cert
 
 nova-db-sync:
   cmd.wait:
