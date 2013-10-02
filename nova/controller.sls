@@ -23,8 +23,8 @@ nova-cert:
       - pkg: nova-api
   service.running:
     - enable: True
-      - require:
-        - pkg: nova-cert
+    - require:
+      - pkg: nova-cert
 
 nova-db-sync:
   cmd.wait:
