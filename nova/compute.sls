@@ -38,7 +38,6 @@ nova-volumes-secret:
       - file: nova-volumes-secret
     - watch:
       - file: nova-volumes-secret
-    
 
 nova-compute-kvm:
   pkg.installed:
@@ -55,3 +54,38 @@ nova-compute:
       - pkg: nfs-client
       - pkg: nova-compute-kvm
       - cmd: nova-volumes-secret
+
+# Live Migration Settings
+
+nova-libvirt-conf-migration-tls-setting:
+  file.sed:
+    - name: /etc/libvirt/libvirtd.conf
+    - before: 0
+    - after: 1
+    - limit: ^listen_tls =
+    - require:
+      - file: nova-libvirt-conf-migration-tls-comment
+
+nova-libvirt-conf-migration-tls-comment:
+  file.uncomment:
+    - name: /etc/libvirt/libvirtd.conf
+    - limit: ^listen_tls = [01]$
+    - require:
+      - pkg: nova-compute-kvm
+
+nova-libvirt-conf-migraiton-tcp-auth:
+  file.append:
+    - name: /etc/libvirt/libvritd.conf
+    - text: auth_tcp = "none"
+    - require:
+      - pkg: nova-compute-kvm
+
+
+nova-libvirtbin-migration-opts:
+  file.sed:
+    - name: /etc/default/libvirt-bin
+    - limit: ^libvirtd_opts=
+    - before: '"-d"'
+    - after: '"-d -l"'
+    - require:
+      - pkg: nova-compute-kvm
