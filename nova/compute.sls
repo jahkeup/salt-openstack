@@ -89,3 +89,17 @@ nova-libvirtbin-migration-opts:
     - after: '"-d -l"'
     - require:
       - pkg: nova-compute-kvm
+
+nova-libvirt-bin-service:
+  service.running:
+    - name: libvirt-bin
+    - enable: True
+    - require:
+      - pkg: nova-compute-kvm
+      - file: nova-libvirtbin-migration-opts
+      - file: nova-libvirt-conf-migraiton-tcp-auth
+      - file: nova-libvirt-conf-migration-tls-setting
+    - watch:
+      - file: nova-libvirtbin-migration-opts
+      - file: nova-libvirt-conf-migraiton-tcp-auth
+      - file: nova-libvirt-conf-migration-tls-setting
