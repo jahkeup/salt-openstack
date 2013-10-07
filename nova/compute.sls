@@ -69,13 +69,13 @@ nova-libvirt-conf-migration-tls-setting:
 nova-libvirt-conf-migration-tls-comment:
   file.uncomment:
     - name: /etc/libvirt/libvirtd.conf
-    - limit: ^listen_tls = [01]$
+    - regex: ^listen_tls = [01]$
     - require:
       - pkg: nova-compute-kvm
 
 nova-libvirt-conf-migraiton-tcp-auth:
   file.append:
-    - name: /etc/libvirt/libvritd.conf
+    - name: /etc/libvirt/libvirtd.conf
     - text: auth_tcp = "none"
     - require:
       - pkg: nova-compute-kvm
