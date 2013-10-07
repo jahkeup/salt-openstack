@@ -57,21 +57,21 @@ nova-compute:
 
 # Live Migration Settings
 
-nova-libvirt-conf-migration-tls-setting:
-  file.sed:
-    - name: /etc/libvirt/libvirtd.conf
-    - before: 0
-    - after: 1
-    - limit: ^listen_tls =
-    - require:
-      - file: nova-libvirt-conf-migration-tls-comment
+# nova-libvirt-conf-migration-tls-setting:
+#   file.sed:
+#     - name: /etc/libvirt/libvirtd.conf
+#     - before: 0
+#     - after: 1
+#     - limit: ^listen_tls =
+#     - require:
+#       - file: nova-libvirt-conf-migration-tls-comment
 
-nova-libvirt-conf-migration-tls-comment:
-  file.uncomment:
-    - name: /etc/libvirt/libvirtd.conf
-    - regex: ^listen_tls = [01]$
-    - require:
-      - pkg: nova-compute-kvm
+# nova-libvirt-conf-migration-tls-comment:
+#   file.uncomment:
+#     - name: /etc/libvirt/libvirtd.conf
+#     - regex: ^listen_tls = [01]$
+#     - require:
+#       - pkg: nova-compute-kvm
 
 nova-libvirt-conf-migraiton-tcp-auth:
   file.append:
