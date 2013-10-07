@@ -98,8 +98,8 @@ nova-libvirt-bin-service:
       - pkg: nova-compute-kvm
       - file: nova-libvirtbin-migration-opts
       - file: nova-libvirt-conf-migraiton-tcp-auth
-      - file: nova-libvirt-conf-migration-tls-setting
+    # - file: nova-libvirt-conf-migration-tls-setting
     - watch:
       - file: nova-libvirtbin-migration-opts
       - file: nova-libvirt-conf-migraiton-tcp-auth
-      - file: nova-libvirt-conf-migration-tls-setting
+    # - file: nova-libvirt-conf-migration-tls-setting
