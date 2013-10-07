@@ -73,33 +73,33 @@ nova-compute:
 #     - require:
 #       - pkg: nova-compute-kvm
 
-nova-libvirt-conf-migraiton-tcp-auth:
-  file.append:
-    - name: /etc/libvirt/libvirtd.conf
-    - text: auth_tcp = "none"
-    - require:
-      - pkg: nova-compute-kvm
+# nova-libvirt-conf-migraiton-tcp-auth:
+#   file.append:
+#     - name: /etc/libvirt/libvirtd.conf
+#     - text: auth_tcp = "none"
+#     - require:
+#       - pkg: nova-compute-kvm
 
 
-nova-libvirtbin-migration-opts:
-  file.sed:
-    - name: /etc/default/libvirt-bin
-    - limit: ^libvirtd_opts=
-    - before: '"-d"'
-    - after: '"-d -l"'
-    - require:
-      - pkg: nova-compute-kvm
+# nova-libvirtbin-migration-opts:
+#   file.sed:
+#     - name: /etc/default/libvirt-bin
+#     - limit: ^libvirtd_opts=
+#     - before: '"-d"'
+#     - after: '"-d -l"'
+#     - require:
+#       - pkg: nova-compute-kvm
 
-nova-libvirt-bin-service:
-  service.running:
-    - name: libvirt-bin
-    - enable: True
-    - require:
-      - pkg: nova-compute-kvm
-      - file: nova-libvirtbin-migration-opts
-      - file: nova-libvirt-conf-migraiton-tcp-auth
-    # - file: nova-libvirt-conf-migration-tls-setting
-    - watch:
-      - file: nova-libvirtbin-migration-opts
-      - file: nova-libvirt-conf-migraiton-tcp-auth
-    # - file: nova-libvirt-conf-migration-tls-setting
+# nova-libvirt-bin-service:
+#   service.running:
+#     - name: libvirt-bin
+#     - enable: True
+#     - require:
+#       - pkg: nova-compute-kvm
+#       - file: nova-libvirtbin-migration-opts
+#       - file: nova-libvirt-conf-migraiton-tcp-auth
+#     - file: nova-libvirt-conf-migration-tls-setting
+#     - watch:
+#       - file: nova-libvirtbin-migration-opts
+#       - file: nova-libvirt-conf-migraiton-tcp-auth
+#     - file: nova-libvirt-conf-migration-tls-setting
