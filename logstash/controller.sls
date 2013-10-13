@@ -7,3 +7,4 @@ extend:
   logstash-{{role}}-config:
     file.managed:
       - source: salt://openstack/logstash/conf/openstack-shipper.conf
+      - replace: True
