@@ -18,6 +18,8 @@ include:
 keystone:
   pkg.installed:
     - pkgs:
+      - memcached
+      - python-memcache
       - keystone
       - python-keystone
       - python-mysqldb
@@ -31,7 +33,7 @@ keystone:
     - template: jinja
     - user: keystone
     - group: keystone
-    - require: 
+    - require:
       - pkg: keystone
   service.running:
     - enable: True
@@ -48,7 +50,7 @@ sync-keystone-db:
       - pkg: keystone
       - file: keystone
     - require:
-      - pkg: keystone 
+      - pkg: keystone
       - file: keystone
 
 keystonerc:
