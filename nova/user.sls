@@ -6,6 +6,9 @@ nova-user:
     - name: nova
     - uid: 221
     - gid: 221
+    - remove_groups: False
+    - groups:
+        - libvirtd
     - require:
       - group: nova-user
       - user: libvirt-user
