@@ -11,13 +11,15 @@ openstack:
       user: root
       pass: password
       port: 3306
+  memcached:
+    - 127.0.0.1
   auth:
     server: 69.43.73.66
     proto: http
     port: 35357
     service: service            # the service_tenant to auth as
     connection:                 # Connection must be made by an admin
-      user: admin               # tenant user. This is typically the 
+      user: admin               # tenant user. This is typically the
       password: password        # same user as you create with keystone
       insecure: True            # insecure: for non-ssl
     backend:
@@ -153,7 +155,6 @@ openstack:
       internal: http://140.186.77.2:5000/v2.0
       admin: http://140.186.77.2:35357/v2.0
 
- 
 
 
-      
+
