@@ -12,12 +12,8 @@ iptables-persistent:
       - pkg: ufw
   service.running:
     - enable: True
-    - require:
-      - file: iptables-rules
-    - watch:
-      - file: iptables-rules
 
-iptables-rules:
+iptables-v4-rules:
   file.managed:
     - name: /etc/iptables/rules.v4
     - replace: True
@@ -26,4 +22,21 @@ iptables-rules:
     - mode: 544
     - require:
       - pkg: iptables-persistent
+    - require_in:
+      - service: iptables-persistent
+    - watch_in:
+      - service: iptables-persistent
 
+iptables-v6-rules:
+  file.managed:
+    - name: /etc/iptables/rules.v6
+    - replace: True
+    - source: salt://openstack/carrier/conf/rules
+    - template: jinja
+    - mode: 544
+    - require:
+      - pkg: iptables-persistent
+    - require_in:
+      - service: iptables-persistent
+    - watch_in:
+      - service: iptables-persistent
