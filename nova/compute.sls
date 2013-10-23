@@ -5,7 +5,6 @@
 {% set volumes = ceph['cinder'] -%}
 
 include:
-  - openstack.repo
   - openstack.ceph.repo
   - openstack.ceph.keys
   - openstack.patch.kombu

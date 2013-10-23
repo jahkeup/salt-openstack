@@ -1,5 +1,4 @@
 include:
-  - openstack.repo
   - openstack.neutron.user
   - openstack.neutron.ovs
 

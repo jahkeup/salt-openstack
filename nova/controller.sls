@@ -1,5 +1,4 @@
 include:
-  - openstack.repo
   - openstack.patch.kombu
   - openstack.nova.conf
 

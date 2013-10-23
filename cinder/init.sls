@@ -1,5 +1,4 @@
 include:
-  - openstack.repo
   - openstack.ceph.repo
   - openstack.ceph.keys
   - openstack.patch.kombu
@@ -52,7 +51,7 @@ cinder-db-sync:
 
 cinder-service-cephargs:
   cmd.wait:
-    - name: sed -i '1ienv CEPH_ARGS="--id volumes"' /etc/init/cinder-volume.conf 
+    - name: sed -i '1ienv CEPH_ARGS="--id volumes"' /etc/init/cinder-volume.conf
     - require:
       - pkg: cinder-volume
     - watch:

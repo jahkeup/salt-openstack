@@ -2,7 +2,6 @@
 {% set neutron = openstack['neutron'] -%}
 
 include:
-  - openstack.repo
   - openstack.neutron.user
   - openstack.neutron.conf
   - kernel.headers
