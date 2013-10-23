@@ -1,4 +1,4 @@
-# Compute Logstash shipper for nova-compute and quantum-*-agents
+# Compute Logstash shipper for nova-compute and neutron-*-agents
 {% set role = "shipper" %}
 
 {% include 'logstash/service.jinja' %}
