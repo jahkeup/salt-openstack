@@ -1,3 +1,3 @@
 include:
   - openstack.nova.compute
-  - openstack.quantum.compute
+  - openstack.neutron.compute
