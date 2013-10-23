@@ -19,7 +19,9 @@ iptables-v4-rules:
     - replace: True
     - source: salt://openstack/carrier/conf/rules
     - template: jinja
-    - mode: 544
+    - defaults:
+        ip: 4
+    - mode: 444
     - require:
       - pkg: iptables-persistent
     - require_in:
@@ -33,7 +35,9 @@ iptables-v6-rules:
     - replace: True
     - source: salt://openstack/carrier/conf/rules
     - template: jinja
-    - mode: 544
+    - defaults:
+        ip: 6
+    - mode: 444
     - require:
       - pkg: iptables-persistent
     - require_in:
