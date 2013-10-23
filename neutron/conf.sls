@@ -85,3 +85,12 @@ include:
       - file: '/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini'
 
 
+'/etc/neutron/lbaas_agent.ini':
+  file.managed:
+    - source: salt://openstack/neutron/lbass_agent.ini
+    - user: neutron
+    - group: neutron
+    - mode: 440
+    - template: jinja
+    - require:
+      - file: '/etc/neutron'
