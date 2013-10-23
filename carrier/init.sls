@@ -44,3 +44,15 @@ iptables-v6-rules:
       - service: iptables-persistent
     - watch_in:
       - service: iptables-persistent
+
+carrier-config-dir:
+  file.directory:
+    - name: /srv/containers
+    - mode: 775
+
+carrier-config-dir-shorthand:
+  file.symlink:
+    - name: /srv/c
+    - target: /srv/containers
+    - require:
+      - file: carrier-config-dir
