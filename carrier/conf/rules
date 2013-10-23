@@ -11,7 +11,7 @@
 {% for port in pillar['openstack']['ports'] -%}
 -A INPUT -p tcp -m state --state NEW -m tcp --dport {{port}} -j ACCEPT
 {% endfor -%}
-{% if ip is 4 -%}
+{% if ip == 4 -%}
 -A trusted -s 10.0.0.0/8 -j ACCEPT
 -A trusted -s 140.186.77.0/27 -j ACCEPT
 {% endif -%}
