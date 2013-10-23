@@ -11,7 +11,6 @@
 # /var/log/keystone
 
 include:
-  - openstack.repo
   - openstack.patch.kombu
   - openstack.keystone.user
 

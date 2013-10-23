@@ -1,5 +1,4 @@
 include:
-  - openstack.repo
   - openstack.ceph.repo
   - openstack.patch.kombu
   - openstack.glance.user
@@ -64,7 +63,7 @@ glance-api-conf:
     - group: glance
     - source: salt://openstack/glance/conf/glance-api.conf
     - template: jinja
-    - require: 
+    - require:
       - pkg: glance-api
 
 glance-registry-conf:
