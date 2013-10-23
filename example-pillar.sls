@@ -59,23 +59,23 @@ openstack:
     service:
       username: nova
       password: novapassword
-  quantum:
+  neutron:
     server:
-      server: 69.43.73.66
+      server: network.api.cld.packetsurge.net
       proto: http
       port: 9696
     network:
-      domain: cld.example.net
+      domain: cld.packetsurge.net
       type: vlan
       bridge_name: br-osgn
       vlan_range: 550:610
     db:
-      name: quantum
-      username: quantum
-      password: quantumdbpass
+      name: neutron
+      username: neutron
+      password: neutrondbpass
     service:
-      username: quantum
-      password: quantumpass
+      username: neutron
+      password: neutronpass
   cinder:
     db:
       name: cinder
