@@ -15,5 +15,5 @@
 -A trusted -s 10.0.0.0/8 -j ACCEPT
 -A trusted -s 140.186.77.0/27 -j ACCEPT
 {% endif -%}
--A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A INPUT -j REJECT --reject-with icmp-host-unreachable
 COMMIT
