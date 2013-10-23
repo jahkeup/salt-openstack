@@ -56,3 +56,14 @@ carrier-config-dir-shorthand:
     - target: /srv/containers
     - require:
       - file: carrier-config-dir
+
+carrier-log-dir:
+  file.directory:
+    - name: /srv/containers/log
+    - mode: 777
+
+carrier-log-dir-shorthand:
+  - name: /srv/l
+  - target: /srv/containers/log
+  - require:
+    - file: carrier-log-dir
