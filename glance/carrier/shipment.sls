@@ -1,23 +1,15 @@
-{% set prefix = "/srv/container" %}
+{% set staging = "/srv/container" %}
 include:
-  - openstack.glance.user
+  - openstack.glance.conf
 
-glance-api-conf:
-  file.managed:
-    - name: {{prefix}}/glance/glance-api.conf
-    - user: glance
-    - group: glance
-    - source: salt://openstack/glance/conf/glance-api.conf
-    - template: jinja
-    - require:
-      - user: glance-user
+/etc/glance:
+  file.directory:
+    - name: {{staging}}/glance
 
-glance-registry-conf:
+/etc/glance/glance-api.conf:
   file.managed:
-    - name: {{prefix}}/glance/glance-registry.conf
-    - user: glance
-    - group: glance
-    - source: salt://openstack/glance/conf/glance-registry.conf
-    - template: jinja
-    - require:
-      - user: glance-user
+    - name: {{staging}}/glance/glance-api.conf
+
+/etc/glance/glance-registry.conf:
+  file.managed:
+    - name: {{staging}}/glance/glance-registry.conf
