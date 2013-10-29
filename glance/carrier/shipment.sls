@@ -9,6 +9,8 @@ glance-api-conf:
     - group: glance
     - source: salt://openstack/glance/conf/glance-api.conf
     - template: jinja
+    - require:
+      - user: glance-user
 
 glance-registry-conf:
   file.managed:
@@ -17,3 +19,5 @@ glance-registry-conf:
     - group: glance
     - source: salt://openstack/glance/conf/glance-registry.conf
     - template: jinja
+    - require:
+      - user: glance-user
