@@ -3,6 +3,7 @@ include:
   - openstack.ceph.keys
   - openstack.patch.kombu
   - openstack.cinder.user
+  - openstack.cinder.conf
 
 cinder-ceph-integration:
   pkg.installed:
@@ -16,6 +17,8 @@ cinder-ceph-integration:
 {% for subservice in ['api','scheduler','volume'] %}
 cinder-{{subservice}}:
   pkg.installed:
+    - require_in:
+      - file: /etc/cinder/cinder.conf
     - require:
       - user: cinder-user
       - pkg: cinder-ceph-integration
@@ -57,30 +60,3 @@ cinder-service-cephargs:
     - watch:
       - pkg: cinder-volume
 
-'/etc/cinder/cinder.conf':
-  file.managed:
-    - source: salt://openstack/cinder/conf/cinder.conf
-    - template: jinja
-    - user: cinder
-    - group: cinder
-    - require:
-      - pkg: cinder-api
-
-/etc/cinder/cinder.conf:
-  file.managed:
-    - source: salt://openstack/cinder/conf/cinder.conf
-    - template: jinja
-    - user: cinder
-    - group: cinder
-    - require:
-      - user: cinder
-      - pkg: cinder-api
-
-'/etc/cinder/api-paste.ini':
-  file.managed:
-    - source: salt://openstack/cinder/conf/api-paste.ini
-    - template: jinja
-    - user: cinder
-    - group: cinder
-    - require:
-      - user: cinder-user
