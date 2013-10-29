@@ -1,27 +1,16 @@
-'/etc/cinder/cinder.conf':
-  file.managed:
-    - source: salt://openstack/cinder/conf/cinder.conf
-    - template: jinja
-    - user: cinder
-    - group: cinder
-    - require:
-      - pkg: cinder-api
+{% set staging = "/srv/container" %}
+include:
+  - openstack.cinder.conf
 
-/etc/cinder/cinder.conf:
-  file.managed:
-    - source: salt://openstack/cinder/conf/cinder.conf
-    - template: jinja
-    - user: cinder
-    - group: cinder
-    - require:
-      - user: cinder
-      - pkg: cinder-api
+extend:
+  '/etc/cinder':
+    file.directory:
+      - name: {{staging}}/cinder
 
-'/etc/cinder/api-paste.ini':
-  file.managed:
-    - source: salt://openstack/cinder/conf/api-paste.ini
-    - template: jinja
-    - user: cinder
-    - group: cinder
-    - require:
-      - user: cinder
+  '/etc/cinder/cinder.conf':
+    file.managed:
+      - name: {{staging}}/cinder/cinder.conf
+
+  '/etc/cinder/api-paste.ini':
+    file.managed:
+      - name: {{staging}}/cinder/api-paste.ini
