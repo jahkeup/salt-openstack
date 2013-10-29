@@ -7,6 +7,7 @@
 
 include:
   - openstack.keystone.user
+
 keystone-conf:
   file.managed:
     - name: {{staging}}/keystone/keystone.conf
@@ -14,9 +15,12 @@ keystone-conf:
     - template: jinja
     - user: keystone
     - group: keystone
+    - require:
+        - user: keystone-user
+
 keystonerc:
   file.managed:
-    - name: /root/openrc
+    - name: {{staging}}/openrc
     - mode: 400
     - user: root
     - group: root
