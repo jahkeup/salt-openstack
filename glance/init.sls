@@ -2,6 +2,7 @@ include:
   - openstack.ceph.repo
   - openstack.patch.kombu
   - openstack.glance.user
+  - openstack.glance.conf
   - openstack.keystone.python
 
 glance-ceph-integration:
@@ -11,13 +12,6 @@ glance-ceph-integration:
       - ceph-common
     - require:
       - pkgrepo: ceph-repo
-
-/etc/glance:
-  file.directory:
-    - user: glance
-    - group: glance
-    - require:
-      - pkg: glance-api
 
 glance-api:
   pkg.installed:
@@ -30,9 +24,10 @@ glance-api:
     - enable: True
     - require:
       - pkg: glance-api
+      - file: /etc/glance/glance-api.conf
       - cmd: glance-db-sync
     - watch:
-      - file: glance-api-conf
+      - file: /etc/glance/glance-api.conf
 
 glance-db-sync:
   cmd.wait:
@@ -53,25 +48,6 @@ glance-registry:
     - require:
       - cmd: glance-db-sync
       - pkg: glance-registry
+      - file: /etc/glance/glance-registry.conf
     - watch:
-      - file: glance-registry-conf
-
-glance-api-conf:
-  file.managed:
-    - name: /etc/glance/glance-api.conf
-    - user: glance
-    - group: glance
-    - source: salt://openstack/glance/conf/glance-api.conf
-    - template: jinja
-    - require:
-      - pkg: glance-api
-
-glance-registry-conf:
-  file.managed:
-    - name: /etc/glance/glance-registry.conf
-    - user: glance
-    - group: glance
-    - source: salt://openstack/glance/conf/glance-registry.conf
-    - template: jinja
-    - require:
-      - pkg: glance-registry
+      - file: /etc/glance/glance-registry.conf

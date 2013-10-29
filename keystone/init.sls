@@ -1,9 +1,3 @@
-{% set openstack = pillar['openstack'] -%}
-{% set keystone = openstack['keystone'] -%}
-{% set auth = openstack['auth'] -%}
-{% set authurl = auth.get('proto','http') + "://"+ auth['server'] -%}
-{% set authpass = keystone['service']['password'] -%}
-
 # This state assumes that the database is already installed &
 # provisioned, this also includes the necessary grants and users. The
 # installation will succeed if the database isn't configured however,
@@ -13,6 +7,7 @@
 include:
   - openstack.patch.kombu
   - openstack.keystone.user
+  - openstack.keystone.conf
 
 keystone:
   pkg.installed:
@@ -26,20 +21,16 @@ keystone:
     - require:
       - sls: openstack.patch.kombu
       - user: keystone-user
-  file.managed:
-    - name: /etc/keystone/keystone.conf
-    - source: salt://openstack/keystone/conf/keystone.conf
-    - template: jinja
-    - user: keystone
-    - group: keystone
-    - require:
-      - pkg: keystone
+    - require_in:
+      - file: /etc/keystone/keystone.conf
+
   service.running:
     - enable: True
     - require:
+      - file: /etc/keystone/keystone.conf
       - pkg: keystone
     - watch:
-      - file: keystone
+      - file: /etc/keystone/keystone.conf
       - cmd: sync-keystone-db
 
 sync-keystone-db:
@@ -51,18 +42,3 @@ sync-keystone-db:
     - require:
       - pkg: keystone
       - file: keystone
-
-keystonerc:
-  file.managed:
-    - name: /root/openrc
-    - mode: 400
-    - user: root
-    - group: root
-    - contents: |
-        export OS_USERNAME=admin
-        export OS_TENANT_NAME="Default Tenant"
-        export OS_PASSWORD={{authpass}}
-        export OS_AUTH_URL="{{authurl}}:{{auth.get('public_port',5000)}}/v2.0/"
-        # export SERVICE_TOKEN={{authpass}}
-        # export SERVICE_ENDPOINT="{{authurl}}:{{auth.get('port',35357)}}/v2.0/"
-
