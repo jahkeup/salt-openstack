@@ -83,4 +83,4 @@ cinder-service-cephargs:
     - user: cinder
     - group: cinder
     - require:
-      - user: cinder
+      - user: cinder-user
