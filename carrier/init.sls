@@ -63,7 +63,8 @@ carrier-log-dir:
     - mode: 777
 
 carrier-log-dir-shorthand:
-  - name: /srv/l
-  - target: /srv/containers/log
-  - require:
-    - file: carrier-log-dir
+  file.symlink:
+    - name: /srv/l
+    - target: /srv/containers/log
+    - require:
+      - file: carrier-log-dir
