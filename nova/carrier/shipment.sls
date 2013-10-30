@@ -11,5 +11,4 @@ extend:
   '/etc/nova/{{conf}}':
     file.managed:
       - name: {{staging}}/nova/{{conf}}
-      - source: salt://openstack/nova/conf/{{conf}}
   {% endfor %}
