@@ -47,24 +47,24 @@ iptables-v6-rules:
 
 carrier-config-dir:
   file.directory:
-    - name: /srv/containers
+    - name: /srv/container
     - mode: 775
 
 carrier-config-dir-shorthand:
   file.symlink:
     - name: /srv/c
-    - target: /srv/containers
+    - target: /srv/container
     - require:
       - file: carrier-config-dir
 
 carrier-log-dir:
   file.directory:
-    - name: /srv/containers/log
+    - name: /srv/container/log
     - mode: 777
 
 carrier-log-dir-shorthand:
   file.symlink:
     - name: /srv/l
-    - target: /srv/containers/log
+    - target: /srv/container/log
     - require:
       - file: carrier-log-dir
