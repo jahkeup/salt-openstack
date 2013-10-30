@@ -16,6 +16,6 @@ include:
     - user: nova
     - group: nova
     - require:
-      - user: nova-user 
-      - file.directory: '/etc/nova'
+      - user: nova-user
+      - file: '/etc/nova'
 {% endfor %}
