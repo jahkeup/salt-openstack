@@ -1,0 +1,16 @@
+{% set openstack = salt['pillar.get']('openstack') %}
+
+# Openstack Services
+# These must be present, not gonna check with get()
+{% set cinder = openstack['cinder'] %}
+{% set glance = openstack['glance'] %}
+{% set glance = openstack['glance'] %}
+{% set keystone = openstack['keystone'] %}
+{% set neutron = openstack['neutron'] %}
+{% set nova = openstack['nova'] %}
+
+# External services
+{% set auth = openstack['auth'] %}
+{% set ceph = openstack['ceph'] %}
+{% set db = openstack['db'] %}
+{% set rabbit = openstack['rabbit'] %}
