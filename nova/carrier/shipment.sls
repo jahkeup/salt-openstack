@@ -7,7 +7,7 @@ extend:
     file.directory:
       - name: {{staging}}/nova
 
-  {% for conf in 'nova.conf','api-paste.ini','policy.json' %}
+  {% for conf in ['nova.conf','api-paste.ini','policy.json'] %}
   '/etc/nova/{{conf}}':
     file.managed:
       - name: {{staging}}/nova/{{conf}}
