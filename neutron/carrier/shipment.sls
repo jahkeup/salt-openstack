@@ -1,6 +1,8 @@
+{% set staging = "/srv/container" %}
 include:
   - openstack.neutron.user
   - openstack.neutron.conf
+
 extend:
   /etc/neutron:
     file.directory:
