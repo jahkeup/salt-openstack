@@ -12,4 +12,4 @@ extend:
 
   keystonerc:
     file.managed:
-      - name: {{staging}}/keystonerc
+      - name: {{staging}}/keystone/keystonerc
