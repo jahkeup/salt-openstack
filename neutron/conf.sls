@@ -87,7 +87,7 @@ include:
 
 '/etc/neutron/lbaas_agent.ini':
   file.managed:
-    - source: salt://openstack/neutron/lbass_agent.ini
+    - source: salt://openstack/neutron/conf/lbass_agent.ini
     - user: neutron
     - group: neutron
     - mode: 440
