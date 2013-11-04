@@ -1,10 +1,11 @@
-{% set staging = "/srv/container" %}
+{% set staging = "/srv/container/cinder/conf" %}
 include:
   - openstack.glance.conf
 extend:
   /etc/glance:
     file.directory:
       - name: {{staging}}/glance
+      - makedirs: True
 
   /etc/glance/glance-api.conf:
     file.managed:

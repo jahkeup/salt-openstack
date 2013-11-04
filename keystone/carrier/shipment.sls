@@ -1,15 +1,16 @@
-{% set staging = "/srv/container" %}
+{% set staging = "/srv/container/keystone/conf" %}
 include:
     - openstack.keystone.conf
 extend:
   /etc/keystone:
     file.directory:
-      - name: {{staging}}/keystone
+      - name: {{staging}}
+      - makedirs: True
 
   /etc/keystone/keystone.conf:
     file.managed:
-      - name: {{staging}}/keystone/keystone.conf
+      - name: {{staging}}/keystone.conf
 
   keystonerc:
     file.managed:
-      - name: {{staging}}/keystone/keystonerc
+      - name: {{staging}}/keystonerc

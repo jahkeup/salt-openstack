@@ -1,16 +1,17 @@
-{% set staging = "/srv/container" %}
+{% set staging = "/srv/container/cinder/conf" %}
 include:
   - openstack.cinder.conf
 
 extend:
   '/etc/cinder':
     file.directory:
-      - name: {{staging}}/cinder
+      - name: {{staging}}
+      - makedirs: True
 
   '/etc/cinder/cinder.conf':
     file.managed:
-      - name: {{staging}}/cinder/cinder.conf
+      - name: {{staging}}/cinder.conf
 
   '/etc/cinder/api-paste.ini':
     file.managed:
-      - name: {{staging}}/cinder/api-paste.ini
+      - name: {{staging}}/api-paste.ini

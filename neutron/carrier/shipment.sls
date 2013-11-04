@@ -1,4 +1,4 @@
-{% set staging = "/srv/container" %}
+{% set staging = "/srv/container/neutron/conf" %}
 include:
   - openstack.neutron.user
   - openstack.neutron.conf
@@ -6,41 +6,41 @@ include:
 extend:
   /etc/neutron:
     file.directory:
-      - name: {{staging}}/neutron
+      - name: {{staging}}
 
   /etc/neutron/plugins:
     file.directory:
-      - name: {{staging}}/neutron/plugins
+      - name: {{staging}}/plugins
 
   /etc/neutron/plugins/openvswitch:
     file.directory:
-      - name: {{staging}}/neutron/openvswitch
+      - name: {{staging}}/openvswitch
 
   /etc/neutron/neutron.conf:
     file.managed:
-      - name: {{staging}}/neutron/neutron.conf
+      - name: {{staging}}/neutron.conf
 
   '/etc/neutron/dnsmasq.conf':
     file.managed:
-      - name: {{staging}}/neutron/dnsmasq.conf
+      - name: {{staging}}/dnsmasq.conf
 
   '/etc/neutron/metadata_agent.ini':
     file.managed:
-      - name: {{staging}}/neutron/metadata_agent.ini
+      - name: {{staging}}/metadata_agent.ini
 
   '/etc/neutron/dhcp_agent.ini':
     file.managed:
-      - name: {{staging}}/neutron/dhcp_agent.ini
+      - name: {{staging}}/dhcp_agent.ini
 
   '/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini':
     file.managed:
-      - name: {{staging}}/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
+      - name: {{staging}}/plugins/openvswitch/ovs_neutron_plugin.ini
 
   '/etc/neutron/plugin.ini':
     file.symlink:
-      - name: {{staging}}/neutron/plugin.ini
-      - target: '{{staging}}/neutron/plugins/openvswitch/ovs_neutron_plugin.ini'
+      - name: {{staging}}/plugin.ini
+      - target: '{{staging}}/plugins/openvswitch/ovs_neutron_plugin.ini'
 
   '/etc/neutron/lbaas_agent.ini':
     file.managed:
-      - name: {{staging}}/neutron/lbaas_agent.ini
+      - name: {{staging}}/lbaas_agent.ini
