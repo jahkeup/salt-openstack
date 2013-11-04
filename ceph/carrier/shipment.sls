@@ -1,5 +1,8 @@
-# This state will need to be refactored into a template of sorts that can
-# be included into the other shipments as needed. NOT meant for solo use.
+# This directory is intended for use in Dockerfile via a:
+# (assuming you're building in /srv/container/cinder)
+# ADD ../ceph/conf/ /etc/ceph
+#
+{% set staging = "/srv/container/ceph/conf" %}
 include:
   - openstack.ceph.keys
   - openstack.ceph.conf
@@ -8,18 +11,19 @@ include:
 extend:
   ceph-dir:
     file.directory:
-      - name: {{ceph_staging}}
+      - name: {{staging}}
+      - makedirs: True
 
   {% for client in ['instances','glance','cinder'] %}
   ceph-{{ ceph[client]['user'] }}-key:
     file.managed:
-      - name: {{ceph_staging}}/ceph/ceph.client.{{ceph[client]['user']}}.keyring
+      - name: {{staging}}/ceph.client.{{ceph[client]['user']}}.keyring
 
   ceph-{{ceph[client]['user']}}-secret:
     file.managed:
-      - name: {{ceph_staging}}/ceph/ceph.client.{{ceph[client]['user']}}.secret
+      - name: {{staging}}/ceph.client.{{ceph[client]['user']}}.secret
   {% endfor %}
 
   ceph-conf-only:
     file.managed:
-      - name: {{ceph_staging}}/ceph/ceph.conf
+      - name: {{staging}}/ceph.conf
