@@ -7,6 +7,7 @@ extend:
   /etc/neutron:
     file.directory:
       - name: {{staging}}
+      - makedirs: True
 
   /etc/neutron/plugins:
     file.directory:
