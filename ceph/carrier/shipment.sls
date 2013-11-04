@@ -1,4 +1,5 @@
-{% set staging = "/srv/container" %}
+# This state will need to be refactored into a template of sorts that can
+# be included into the other shipments as needed. NOT meant for solo use.
 include:
   - openstack.ceph.keys
   - openstack.ceph.conf
@@ -7,18 +8,18 @@ include:
 extend:
   ceph-dir:
     file.directory:
-      - name: {{staging}}/ceph
+      - name: {{ceph_staging}}
 
   {% for client in ['instances','glance','cinder'] %}
   ceph-{{ ceph[client]['user'] }}-key:
     file.managed:
-      - name: {{staging}}/ceph/ceph.client.{{ ceph[client]['user'] }}.keyring
+      - name: {{ceph_staging}}/ceph/ceph.client.{{ceph[client]['user']}}.keyring
 
   ceph-{{ceph[client]['user']}}-secret:
     file.managed:
-      - name: {{staging}}/ceph/ceph.client.{{ceph[client]['user']}}.secret
+      - name: {{ceph_staging}}/ceph/ceph.client.{{ceph[client]['user']}}.secret
   {% endfor %}
 
   ceph-conf-only:
     file.managed:
-      - name: {{staging}}/ceph/ceph.conf
+      - name: {{ceph_staging}}/ceph/ceph.conf
