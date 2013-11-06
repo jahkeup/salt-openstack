@@ -25,7 +25,7 @@ service-tenant:
     - require:
       - keystone: admin-role
 
-{% for service_tenant in ['nova','quantum','cinder','glance'] %}
+{% for service_tenant in ['nova','neutron','cinder','glance'] %}
 {% set user = openstack[service_tenant]['service'] %}
 
 {{service_tenant}}-keystone-user:
@@ -42,7 +42,7 @@ service-tenant:
 
 # Add the service types to the catalog
 
-{% set services = {'network': 'quantum', 'compute': 'nova', 'identity': 'keystone',
+{% set services = {'network': 'neutron', 'compute': 'nova', 'identity': 'keystone',
                    'volume': 'volume', 'ec2': 'ec2', 'object-store': 'swift',
                    'image': 'glance'} %}
 
