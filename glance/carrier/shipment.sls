@@ -1,4 +1,4 @@
-{% set staging = "/srv/container/cinder/conf" %}
+{% set staging = "/srv/container/glance/conf" %}
 include:
   - openstack.glance.conf
 extend:
