@@ -1,3 +1,9 @@
+# Host also need a loopback on 192.0.2.1
+# auto lo lo:1
+# iface lo:1 inet static
+#   address 192.0.2.1/32
+#
+
 include:
   - docker
 
@@ -5,6 +11,21 @@ ufw:
   pkg.purged:
     - require:
       - pkg: docker
+dnsmasq:
+  pkg.installed:
+    - require:
+      - service: iptables-persistent
+  {% if '192.0.2.1' in grains['ipv4'] %}
+  file.sed:
+  - name: /etc/dnsmasq.conf
+  - before: '^#listen-address='
+  - after: listen-address=192.0.2.1
+  - require_in:
+    - service: dnsmasq
+  - watch_in:
+    - service: dnsmasq
+  {% endif %}
+  service.running: []
 
 iptables-persistent:
   pkg.installed:
