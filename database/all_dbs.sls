@@ -1,7 +1,7 @@
 {% set openstack = pillar['openstack'] -%}
 {% set conn = openstack['db']['connection'].items() -%}
 
-{% for service in ['keystone','nova','quantum','glance','cinder'] %}
+{% for service in ['keystone','nova','neutron','glance','cinder'] %}
 
 {{service}}-database:
   mysql_database.present:
@@ -9,7 +9,7 @@
     {% for p,v in conn %}
     - connection_{{p}}: {{v}}
     {% endfor %}
-  
+
 {{service}}-database-user:
   mysql_user.present:
     - name: {{openstack[service]['db']['username']}}
@@ -18,7 +18,7 @@
     {% for p,v in conn %}
     - connection_{{p}}: {{v}}
     {% endfor %}
-    
+
 {{service}}-database-localhost-user:
   mysql_user.present:
     - name: {{openstack[service]['db']['username']}}
