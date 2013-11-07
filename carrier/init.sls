@@ -62,7 +62,7 @@ docker-dnsmasq-conf:
   file.sed:
     - name: /etc/dnsmasq.conf
     - before: '^#listen-address='
-    - after: '^listen-address=192.0.2.1'
+    - after: 'listen-address=192.0.2.1'
     - require_in:
       - service: dnsmasq
     - watch_in:
@@ -71,7 +71,7 @@ docker-dns-service:
   file.sed:
     - name: /etc/init/docker.conf
     - before: '/usr/bin/docker -d$'
-    - after: '/usr/bin/docker -d -dns 192.0.2.1$'
+    - after: '/usr/bin/docker -d -dns 192.0.2.1'
     - require_in:
       - service: docker
     - watch_in:
