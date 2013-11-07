@@ -58,24 +58,24 @@ dnsmasq:
   service.running: []
 
 {% if '192.0.2.1' in grains['ipv4'] %}
-  docker-dnsmasq-conf:
-    file.sed:
-      - name: /etc/dnsmasq.conf
-      - before: '^#listen-address='
-      - after: '^listen-address=192.0.2.1'
-      - require_in:
-        - service: dnsmasq
-      - watch_in:
-        - service: dnsmasq
-  docker-dns-service:
-    file.sed:
-      - name: /etc/init/docker.conf
-      - before: '/usr/bin/docker -d$'
-      - after: '/usr/bin/docker -d -dns 192.0.2.1$'
-      - require_in:
-        - service: docker
-      - watch_in:
-        - service: docker
+docker-dnsmasq-conf:
+  file.sed:
+    - name: /etc/dnsmasq.conf
+    - before: '^#listen-address='
+    - after: '^listen-address=192.0.2.1'
+    - require_in:
+      - service: dnsmasq
+    - watch_in:
+      - service: dnsmasq
+docker-dns-service:
+  file.sed:
+    - name: /etc/init/docker.conf
+    - before: '/usr/bin/docker -d$'
+    - after: '/usr/bin/docker -d -dns 192.0.2.1$'
+    - require_in:
+      - service: docker
+    - watch_in:
+      - service: docker
 {% endif %}
 
 carrier-config-dir:
