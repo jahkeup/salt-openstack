@@ -14,3 +14,6 @@ extend:
   /etc/glance/glance-registry.conf:
     file.managed:
       - name: {{staging}}/glance-registry.conf
+
+{% set staging = "/srv/container/glance/ceph" %}
+{% include 'openstack/ceph/carrier/shipment.jinja' %}
