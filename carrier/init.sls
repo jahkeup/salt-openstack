@@ -11,21 +11,6 @@ ufw:
   pkg.purged:
     - require:
       - pkg: docker
-dnsmasq:
-  pkg.installed:
-    - require:
-      - service: iptables-persistent
-  {% if '192.0.2.1' in grains['ipv4'] %}
-  file.sed:
-  - name: /etc/dnsmasq.conf
-  - before: '^#listen-address='
-  - after: listen-address=192.0.2.1
-  - require_in:
-    - service: dnsmasq
-  - watch_in:
-    - service: dnsmasq
-  {% endif %}
-  service.running: []
 
 iptables-persistent:
   pkg.installed:
@@ -65,6 +50,33 @@ iptables-v6-rules:
       - service: iptables-persistent
     - watch_in:
       - service: iptables-persistent
+
+dnsmasq:
+  pkg.installed:
+    - require:
+      - service: iptables-persistent
+  service.running: []
+
+{% if '192.0.2.1' in grains['ipv4'] %}
+  docker-dnsmasq-conf:
+    file.sed:
+      - name: /etc/dnsmasq.conf
+      - before: '^#listen-address='
+      - after: '^listen-address=192.0.2.1'
+      - require_in:
+        - service: dnsmasq
+      - watch_in:
+        - service: dnsmasq
+  docker-dns-service:
+    file.sed:
+      - name: /etc/init/docker.conf
+      - before: '/usr/bin/docker -d$'
+      - after: '/usr/bin/docker -d -dns 192.0.2.1$'
+      - require_in:
+        - service: docker
+      - watch_in:
+        - service: docker
+{% endif %}
 
 carrier-config-dir:
   file.directory:
