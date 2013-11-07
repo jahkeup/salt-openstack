@@ -4,13 +4,13 @@ include:
 extend:
   /etc/glance:
     file.directory:
-      - name: {{staging}}/glance
+      - name: {{staging}}
       - makedirs: True
 
   /etc/glance/glance-api.conf:
     file.managed:
-      - name: {{staging}}/glance/glance-api.conf
+      - name: {{staging}}/glance-api.conf
 
   /etc/glance/glance-registry.conf:
     file.managed:
-      - name: {{staging}}/glance/glance-registry.conf
+      - name: {{staging}}/glance-registry.conf
