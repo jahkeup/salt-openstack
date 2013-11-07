@@ -15,3 +15,6 @@ extend:
   '/etc/cinder/api-paste.ini':
     file.managed:
       - name: {{staging}}/api-paste.ini
+
+{% set staging = "/srv/container/cinder/ceph" %}
+{% include 'openstack/ceph/carrier/shipment.jinja' %}
