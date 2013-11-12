@@ -10,6 +10,6 @@ extend:
   {% for build in builds %}
   {{build}}-controller-container:
     cmd.run:
-      - unless: false
+      - unless: 'false'
   {% endfor %}
   
