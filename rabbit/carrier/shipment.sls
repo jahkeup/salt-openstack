@@ -1,5 +1,10 @@
 {% set staging = '/srv/container/rabbit/conf' -%}
 
+rabbit-conf:
+  file.directory:
+    - name: {{staging}}
+    - makedirs: True
+
 rabbit-users:
   file.managed:
     - name: {{staging}}/rabbit_passwords.txt
