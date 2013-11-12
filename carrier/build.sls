@@ -23,7 +23,7 @@ controller-container:
 {{build}}-controller-upstart-service:
   cmd.run:
     - name: cp {{build_base}}/{{build}}/{{build}}-upstart.conf /etc/init/{{build}}-container.conf
-    - unless: file /etc/init/{{build}}-container.conf
+    - unless: diff /etc/init/{{build}}-container.conf {{build_base}}/{{build}}/{{build}}-container.conf
     - require:
       - cmd: {{build}}-controller-container
 
