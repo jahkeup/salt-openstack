@@ -1,4 +1,7 @@
-{% include 'openstack/carrier/build.sls' with context %}
+{% from 'openstack/carrier/build.sls' import builds %}
+
+include:
+  - openstack.carrier.build
 
 extend:
   controller-container:
