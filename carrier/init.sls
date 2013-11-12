@@ -123,5 +123,12 @@ carrier-container-repo:
     - require_in:
       - file: carrier-config-dir
 
+carrier-ssh-into:
+  cmd.run:
+    - name: cp /srv/container/shared/ssh_into /usr/bin/ssh_into
+    - unless: diff /srv/container/shared/ssh_into /usr/bin/ssh_into
+    - require:
+      - git: carrier-container-repo
+
 {% endif %}
 
