@@ -1,6 +1,8 @@
 {% set staging = "/srv/container/glance/conf" %}
 include:
   - openstack.glance.conf
+  - openstack.glance.carrier.ceph-shipment
+
 extend:
   /etc/glance:
     file.directory:
@@ -15,5 +17,3 @@ extend:
     file.managed:
       - name: {{staging}}/glance-registry.conf
 
-{% set staging = "/srv/container/glance/ceph" %}
-{% include 'openstack/ceph/carrier/shipment.jinja' %}
