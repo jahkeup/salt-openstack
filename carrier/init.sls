@@ -6,6 +6,7 @@
 
 include:
   - docker
+  - git
 
 ufw:
   pkg.purged:
@@ -109,3 +110,17 @@ carrier-log-dir-shorthand:
     - target: /srv/container/log
     - require:
       - file: carrier-log-dir
+
+{% if salt['pillar.get']('openstack:carrier:repo') %}
+carrier-container-repo:
+  git.latest:
+    - name: {{salt['pillar.get']('openstack:carrier:repo') }}
+    - target: /srv/container
+    - identity: /srv/git_user.key
+    - force_checkout: True      # There will be the conf/ from shipments
+    - require:
+      - file: git-key            # From git state, need this to clone!
+      - file: carrier-config-dir
+
+{% endif %}
+
