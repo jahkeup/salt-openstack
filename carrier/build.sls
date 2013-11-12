@@ -1,13 +1,16 @@
 {% set build_base = '/srv/container' -%}
 {% set builds = ['keystone', 'glance', 'rabbit'] -%}
 {% set check_cmd = "docker images | egrep '^{0}\s'" -%}
-
+include:
+  - openstack.carrier
 
 controller-container:
   cmd.run:
     - name: docker build -t controller .
     - cwd: {{build_base}}
     - unless: {{check_cmd.format('controller')}}
+    - require:
+      - git: carrier-container-repo # must exist, will fail if missing pillar data.
 
 {% for build in builds %}
 {{build}}-controller-container:
