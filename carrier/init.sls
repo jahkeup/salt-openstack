@@ -119,7 +119,8 @@ carrier-container-repo:
     - identity: /srv/git_user.key
     - force_checkout: True      # There will be the conf/ from shipments
     - require:
-      - file: git-key            # From git state, need this to clone!
+      - file: git-key
+    - require_in:
       - file: carrier-config-dir
 
 {% endif %}
