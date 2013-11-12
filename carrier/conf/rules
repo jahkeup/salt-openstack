@@ -11,7 +11,7 @@
 {% for port in pillar['openstack']['ports'] -%}
 {% if port == 5672 -%}
 # Port {{port}} is a private service
--A INPUT -p tcp -m state --state NEW -m tcp --dport {{port}} -j TRUSTED
+-A INPUT -p tcp -m state --state NEW -m tcp --dport {{port}} -j trusted
 {% else -%}
 -A INPUT -p tcp -m state --state NEW -m tcp --dport {{port}} -j ACCEPT
 {% endif -%}
