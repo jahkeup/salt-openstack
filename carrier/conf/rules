@@ -9,7 +9,7 @@
 -A INPUT -i lo -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 {% for port in pillar['openstack']['ports'] -%}
-{% if port in [5762] %}
+{% if port in ['5762'] %}
 # Port {{port}} is a private service
 -A INPUT -p tcp -m state --state NEW -m tcp --dport {{port}} -j TRUSTED
 {% else %}
