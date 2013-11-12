@@ -17,7 +17,7 @@ controller-container:
   cmd.run:
     - name: docker build -t controller/{{build}} .
     - cwd: {{build_base}}/{{build}}
-    - unless: {{check_cmd.format(build)}}
+    - unless: {{check_cmd.format('controller/' + build)}}
     - require:
       - cmd: controller-container
 {{build}}-controller-upstart-service:
