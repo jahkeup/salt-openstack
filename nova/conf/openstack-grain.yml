@@ -1,0 +1,8 @@
+grains:
+  openstack:
+    network:
+      osm:
+        interface: em1.11
+        addr: 162.219.98.4
+        ports:
+          - p1p1
